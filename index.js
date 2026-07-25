@@ -247,19 +247,26 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let repos = [];
   try {
-    const headers = { Accept: 'application/vnd.github+json' };
-    let endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+    // 1. Try authenticated fetch if token exists
     if (GH_TOKEN) {
-      headers.Authorization = `Bearer ${GH_TOKEN}`;
-      endpoint = `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`;
+      try {
+        const res = await fetch(
+          `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`,
+          { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${GH_TOKEN}` } }
+        );
+        if (res.ok) repos = await res.json();
+      } catch (e) {
+        console.warn('Authenticated fetch failed, falling back to public endpoint');
+      }
     }
-    const res = await fetch(endpoint, { headers });
-    if (!res.ok) throw new Error(`GitHub API ${res.status}`);
-    repos = await res.json();
+
+    // 2. Fallback to public repos endpoint if authenticated fetch returned empty or failed
+    if (!Array.isArray(repos) || repos.length === 0) {
+      const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+      if (res.ok) repos = await res.json();
+    }
   } catch (err) {
     console.warn('GitHub projects fetch failed:', err);
-    if (loadingEl) loadingEl.classList.add('github-loading--hidden');
-    return;
   }
 
   // Hide loading skeleton
