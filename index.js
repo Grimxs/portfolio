@@ -235,9 +235,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
-  // GitHub PAT for fetching private repos (read-only metadata access)
-  const GH_TOKEN = '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';
-
   // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
     username.toLowerCase(),
@@ -247,23 +244,9 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let repos = [];
   try {
-    // 1. Try authenticated fetch if token exists
-    if (GH_TOKEN) {
-      try {
-        const res = await fetch(
-          `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`,
-          { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${GH_TOKEN}` } }
-        );
-        if (res.ok) repos = await res.json();
-      } catch (e) {
-        console.warn('Authenticated fetch failed, falling back to public endpoint');
-      }
-    }
-
-    // 2. Fallback to public repos endpoint if authenticated fetch returned empty or failed
-    if (!Array.isArray(repos) || repos.length === 0) {
-      const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-      if (res.ok) repos = await res.json();
+    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+    if (res.ok) {
+      repos = await res.json();
     }
   } catch (err) {
     console.warn('GitHub projects fetch failed:', err);
@@ -272,10 +255,14 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
+  if (!Array.isArray(repos) || repos.length === 0) return;
+
   // Filter out skipped repos
   const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
 
   if (displayRepos.length === 0) return;
+
+  container.innerHTML = '';
 
   // Build a card for each repo
   displayRepos.forEach((repo, index) => {
@@ -283,7 +270,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     const isPrivate = repo.private;
 
     const card = document.createElement('div');
-    card.className = `work__box${isReverse ? ' work__box--reverse' : ''} fade-in`;
+    card.className = `work__box${isReverse ? ' work__box--reverse' : ''} fade-in visible`;
     card.dataset.repo = repo.name;
     if (isPrivate) card.dataset.locked = 'true';
 
