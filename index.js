@@ -132,40 +132,14 @@ const yearEl = document.getElementById('footer-year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 /* -----------------------------------------
-  Apply locked-project badges to hardcoded
-  projects that have data-locked="true"
+  Apply locked-project badges
  ---------------------------------------- */
 
-(function applyLockedBadges() {
-  document.querySelectorAll('.work__box[data-locked="true"]').forEach(box => {
-    // Replace the GitHub link with a locked badge
-    const linksEl = box.querySelector('.work__links');
-    if (!linksEl) return;
-
-    // Remove existing github anchor(s) from work__links
-    linksEl.querySelectorAll('a[href*="github.com"]').forEach(a => a.remove());
-    // Also remove orphaned separators
-    linksEl.querySelectorAll('.work__links-separator').forEach(s => s.remove());
-
-    // Insert locked badge
-    const badge = document.createElement('span');
-    badge.className = 'work__locked-badge';
-    badge.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
-        fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
-        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-      </svg>
-      Private — Not available for download
-    `;
-    linksEl.appendChild(badge);
-  });
-})();
+// Locked styling is now applied directly during card generation
 
 /* -----------------------------------------
-  Auto-fetch GitHub repos and render new
-  ones that aren't already on the page
+  Auto-fetch GitHub repos (public + private)
+  and render project cards with descriptions
  ---------------------------------------- */
 
 (async function loadGitHubProjects() {
@@ -177,79 +151,25 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
-  // Render placeholders for private repos configured on the section via
-  // `data-private-repos` (comma-separated). These will show as locked
-  // projects with a Request Access button.
-  const privateRaw = workSection.dataset.privateRepos || workSection.dataset.private || '';
-  const privateSlugs = privateRaw.split(',').map(s => s.trim()).filter(Boolean);
-  privateSlugs.forEach(slug => {
-    const slugLower = slug.toLowerCase();
-    const exists = [...document.querySelectorAll('.work__box[data-repo]')]
-      .some(el => el.dataset.repo && el.dataset.repo.toLowerCase() === slugLower);
-    if (exists) return;
-    const formattedName = slug.replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  // GitHub PAT for fetching private repos (optional, empty by default to prevent secret exposure)
+  const GH_TOKEN = '';
 
-    const card = document.createElement('div');
-    card.className = 'work__box fade-in';
-    card.dataset.repo = slug;
-    card.dataset.locked = 'true';
-    card.innerHTML = `
-      <div class="work__text">
-        <span class="work__tag">Private Project</span>
-        <h3>${escapeHtml(formattedName)}</h3>
-        <p class="work__desc">Private repository — access restricted. Request access to download or view the source.</p>
-        <ul class="work__list">
-          <li>Private</li>
-        </ul>
-        <div class="work__links">
-          <button type="button" class="btn btn--outline request-access-btn" data-project="${escapeHtml(formattedName)}">Request Access</button>
-        </div>
-      </div>
-      <div class="work__image-box">
-        <div class="mockup-browser">
-          <div class="mockup-browser__bar">
-            <span class="mockup-browser__dot mockup-browser__dot--red"></span>
-            <span class="mockup-browser__dot mockup-browser__dot--yellow"></span>
-            <span class="mockup-browser__dot mockup-browser__dot--green"></span>
-            <div class="mockup-browser__url">${escapeHtml(slug)}</div>
-          </div>
-          <div class="mockup-browser__screen mockup-github-screen">
-            <div class="mockup-github-card">
-              <div class="mockup-github-card__icon" style="color: #6366f1">🔒</div>
-              <div class="mockup-github-card__name">${escapeHtml(formattedName)}</div>
-              <div class="mockup-github-card__desc">Private repository — access is restricted.</div>
-              <div class="mockup-github-card__stats">
-                <span class="mockup-github-card__lang" style="color: #6366f1">Private</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    container.appendChild(card);
-    fadeObserver.observe(card);
-  });
-
-  // Collect repo slugs already hardcoded on the page (case-insensitive)
-  const existingSlugs = new Set(
-    [...document.querySelectorAll('.work__box[data-repo]')]
-      .map(el => el.dataset.repo.toLowerCase())
-  );
-
-  // Repos to always skip (config repos, etc.)
+  // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
-    username.toLowerCase(),        // profile readme repo
+    username.toLowerCase(),
     '.github',
     'portfolio',
   ]);
 
   let repos = [];
   try {
-    const res = await fetch(
-      `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`,
-      { headers: { Accept: 'application/vnd.github+json' } }
-    );
+    const headers = { Accept: 'application/vnd.github+json' };
+    let endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+    if (GH_TOKEN) {
+      headers.Authorization = `Bearer ${GH_TOKEN}`;
+      endpoint = `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`;
+    }
+    const res = await fetch(endpoint, { headers });
     if (!res.ok) throw new Error(`GitHub API ${res.status}`);
     repos = await res.json();
   } catch (err) {
@@ -261,31 +181,56 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  // Filter: public, not already shown, not in skip list
-  const newRepos = repos.filter(r =>
-    !r.private &&
-    !existingSlugs.has(r.name.toLowerCase()) &&
-    !SKIP_REPOS.has(r.name.toLowerCase())
-  );
+  // Filter out skipped repos
+  const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
 
-  if (newRepos.length === 0) return;
+  if (displayRepos.length === 0) return;
 
   // Build a card for each repo
-  newRepos.forEach((repo, index) => {
+  displayRepos.forEach((repo, index) => {
     const isReverse = index % 2 !== 0;
-    const langs = repo.language ? `<li>${escapeHtml(repo.language)}</li>` : '';
+    const isPrivate = repo.private;
 
     const card = document.createElement('div');
     card.className = `work__box${isReverse ? ' work__box--reverse' : ''} fade-in`;
     card.dataset.repo = repo.name;
+    if (isPrivate) card.dataset.locked = 'true';
 
+    // Format project name
+    const formattedName = repo.name
+      .replace(/-/g, ' ')
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, l => l.toUpperCase());
+
+    // Determine tag
+    const getTag = (language, isPrivate) => {
+      if (isPrivate) return 'Private Project';
+      if (!language) return 'Project';
+      const l = language.toLowerCase();
+      if (['javascript', 'typescript', 'vue', 'react'].includes(l)) return 'Web App';
+      if (['php', 'python', 'ruby', 'go'].includes(l)) return 'Full-Stack';
+      if (['c#', 'java', 'c++', 'c'].includes(l)) return 'Application';
+      if (['html', 'css', 'scss'].includes(l)) return 'Frontend';
+      return 'Project';
+    };
+
+    // Topics/tags from GitHub
+    const topicsHtml = (repo.topics && repo.topics.length > 0)
+      ? repo.topics.map(t => `<li>${escapeHtml(t)}</li>`).join('')
+      : (repo.language ? `<li>${escapeHtml(repo.language)}</li>` : '');
+
+    // Mockup color
+    const mockupColors = ['#6366f1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#06b6d4'];
+    const colorIndex = repo.name.length % mockupColors.length;
+    const accentColor = mockupColors[colorIndex];
+
+    // Stars & forks
     const stars = repo.stargazers_count > 0
       ? `<span class="github-projects__meta-item">
            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
              fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
            ${repo.stargazers_count}
-         </span>`
-      : '';
+         </span>` : '';
 
     const forks = repo.forks_count > 0
       ? `<span class="github-projects__meta-item">
@@ -296,42 +241,55 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
              <path d="M18 9v1a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9"/><path d="M12 12v3"/>
            </svg>
            ${repo.forks_count}
-         </span>`
-      : '';
+         </span>` : '';
 
     const updatedDate = new Date(repo.updated_at).toLocaleDateString('en-US', {
       year: 'numeric', month: 'short'
     });
 
-    // Format project name professionally
-    const formattedName = repo.name
-      .replace(/-/g, ' ')
-      .replace(/_/g, ' ')
-      .replace(/\b\w/g, l => l.toUpperCase());
+    // Description — use GitHub About description
+    const description = repo.description || 'A development project showcasing technical skills and problem-solving.';
 
-    // Determine tag based on language
-    const getTag = (language) => {
-      if (!language) return 'Project';
-      const l = language.toLowerCase();
-      if (['javascript', 'typescript', 'vue', 'react'].includes(l)) return 'Web App';
-      if (['php', 'python', 'ruby', 'go'].includes(l)) return 'Full-Stack';
-      if (['c#', 'java', 'c++', 'c'].includes(l)) return 'Application';
-      if (['html', 'css', 'scss'].includes(l)) return 'Frontend';
-      return 'Project';
-    };
+    // Links section — different for private vs public
+    const linksHtml = isPrivate
+      ? `<button type="button" class="btn btn--outline request-access-btn" data-project="${escapeHtml(formattedName)}">Request Access</button>`
+      : `<a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="link__text">
+            View on GitHub <span>&rarr;</span>
+          </a>`;
 
-    // Generate a deterministic color accent for the mockup based on repo name
-    const mockupColors = ['#6366f1', '#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#06b6d4'];
-    const colorIndex = repo.name.length % mockupColors.length;
-    const accentColor = mockupColors[colorIndex];
+    // Mockup screen content — different for private vs public
+    const mockupContent = isPrivate
+      ? `<div class="mockup-github-card">
+              <div class="mockup-github-card__icon" style="color: ${accentColor}">🔒</div>
+              <div class="mockup-github-card__name">${escapeHtml(formattedName)}</div>
+              <div class="mockup-github-card__desc">${escapeHtml(description)}</div>
+              <div class="mockup-github-card__stats">
+                <span class="mockup-github-card__lang" style="color: ${accentColor}">Private</span>
+              </div>
+            </div>`
+      : `<div class="mockup-github-card">
+              <div class="mockup-github-card__icon" style="color: ${accentColor}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                  <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+              </div>
+              <div class="mockup-github-card__name">${escapeHtml(formattedName)}</div>
+              <div class="mockup-github-card__desc">${escapeHtml(description)}</div>
+              <div class="mockup-github-card__stats">
+                ${repo.language ? `<span class="mockup-github-card__lang" style="color: ${accentColor}">${escapeHtml(repo.language)}</span>` : ''}
+                <span>★ ${repo.stargazers_count}</span>
+                <span>⑂ ${repo.forks_count}</span>
+              </div>
+            </div>`;
 
     card.innerHTML = `
       <div class="work__text">
-        <span class="work__tag">${getTag(repo.language)}</span>
+        <span class="work__tag">${getTag(repo.language, isPrivate)}</span>
         <h3>${escapeHtml(formattedName)}</h3>
-        <p class="work__desc">${escapeHtml(repo.description || 'A development project showcasing technical skills and problem-solving.')}</p>
+        <p class="work__desc">${escapeHtml(description)}</p>
         <ul class="work__list">
-          ${langs}
+          ${topicsHtml}
         </ul>
         <div class="github-projects__meta">
           ${stars}
@@ -346,9 +304,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
           </span>
         </div>
         <div class="work__links">
-          <a href="${escapeHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer" class="link__text">
-            View on GitHub <span>&rarr;</span>
-          </a>
+          ${linksHtml}
         </div>
       </div>
       <div class="work__image-box">
@@ -360,29 +316,13 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
             <div class="mockup-browser__url">${escapeHtml(repo.name)}</div>
           </div>
           <div class="mockup-browser__screen mockup-github-screen">
-            <div class="mockup-github-card">
-              <div class="mockup-github-card__icon" style="color: ${accentColor}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                  <path d="M9 18c-4.51 2-5-2-7-2"/>
-                </svg>
-              </div>
-              <div class="mockup-github-card__name">${escapeHtml(formattedName)}</div>
-              <div class="mockup-github-card__desc">${escapeHtml(repo.description || '')}</div>
-              <div class="mockup-github-card__stats">
-                ${repo.language ? `<span class="mockup-github-card__lang" style="color: ${accentColor}">${escapeHtml(repo.language)}</span>` : ''}
-                <span>★ ${repo.stargazers_count}</span>
-                <span>⑂ ${repo.forks_count}</span>
-              </div>
-            </div>
+            ${mockupContent}
           </div>
         </div>
       </div>
     `;
 
     container.appendChild(card);
-
-    // Wire up fade-in observer for dynamically added cards
     fadeObserver.observe(card);
   });
 })();
@@ -472,3 +412,171 @@ function escapeHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 }
+
+/* -----------------------------------------
+  Hover Video Preview Animation
+  Injects animated "playing" overlay into
+  each project card's mockup screen
+ ---------------------------------------- */
+
+(function initHoverPreviews() {
+  // Code snippets by language — looks like a video of dev work
+  const codeSnippets = {
+    JavaScript: [
+      { prompt: '$', command: 'npm run dev' },
+      { comment: '// Starting development server...' },
+      { code: '<span class="mockup-preview__keyword">const</span> <span class="mockup-preview__variable">app</span> <span class="mockup-preview__operator">=</span> <span class="mockup-preview__function">createApp</span>()' },
+      { code: '<span class="mockup-preview__variable">app</span>.<span class="mockup-preview__function">use</span>(<span class="mockup-preview__variable">router</span>)' },
+      { code: '<span class="mockup-preview__variable">app</span>.<span class="mockup-preview__function">mount</span>(<span class="mockup-preview__string">\'#app\'</span>)' },
+      { comment: '// ✓ Server running on port 3000' },
+    ],
+    TypeScript: [
+      { prompt: '$', command: 'tsc --watch' },
+      { comment: '// Compiling TypeScript...' },
+      { code: '<span class="mockup-preview__keyword">interface</span> <span class="mockup-preview__function">ApiResponse</span>&lt;T&gt; {' },
+      { code: '  <span class="mockup-preview__variable">data</span>: T[]' },
+      { code: '  <span class="mockup-preview__variable">status</span>: <span class="mockup-preview__string">number</span>' },
+      { code: '}' },
+    ],
+    Vue: [
+      { prompt: '$', command: 'npm run dev' },
+      { comment: '// Hot reload enabled' },
+      { code: '&lt;<span class="mockup-preview__keyword">template</span>&gt;' },
+      { code: '  &lt;<span class="mockup-preview__function">div</span> <span class="mockup-preview__variable">class</span>=<span class="mockup-preview__string">"app"</span>&gt;' },
+      { code: '    &lt;<span class="mockup-preview__function">RouterView</span> /&gt;' },
+      { code: '  &lt;/<span class="mockup-preview__function">div</span>&gt;' },
+    ],
+    PHP: [
+      { prompt: '$', command: 'php artisan serve' },
+      { comment: '// Laravel dev server started' },
+      { code: '<span class="mockup-preview__keyword">class</span> <span class="mockup-preview__function">UserController</span>' },
+      { code: '{' },
+      { code: '  <span class="mockup-preview__keyword">public function</span> <span class="mockup-preview__function">index</span>()' },
+      { code: '  { <span class="mockup-preview__keyword">return</span> <span class="mockup-preview__function">view</span>(<span class="mockup-preview__string">\'users\'</span>); }' },
+    ],
+    Python: [
+      { prompt: '$', command: 'python manage.py runserver' },
+      { comment: '# Starting Django server...' },
+      { code: '<span class="mockup-preview__keyword">class</span> <span class="mockup-preview__function">UserView</span>(APIView):' },
+      { code: '  <span class="mockup-preview__keyword">def</span> <span class="mockup-preview__function">get</span>(self, request):' },
+      { code: '    <span class="mockup-preview__variable">users</span> <span class="mockup-preview__operator">=</span> User.objects.<span class="mockup-preview__function">all</span>()' },
+      { code: '    <span class="mockup-preview__keyword">return</span> <span class="mockup-preview__function">Response</span>(<span class="mockup-preview__variable">users</span>)' },
+    ],
+    HTML: [
+      { prompt: '$', command: 'live-server --port=3000' },
+      { comment: '// Building responsive layout...' },
+      { code: '&lt;<span class="mockup-preview__keyword">section</span> <span class="mockup-preview__variable">class</span>=<span class="mockup-preview__string">"hero"</span>&gt;' },
+      { code: '  &lt;<span class="mockup-preview__function">h1</span>&gt;Welcome&lt;/<span class="mockup-preview__function">h1</span>&gt;' },
+      { code: '  &lt;<span class="mockup-preview__function">p</span>&gt;Modern UI&lt;/<span class="mockup-preview__function">p</span>&gt;' },
+      { code: '&lt;/<span class="mockup-preview__keyword">section</span>&gt;' },
+    ],
+    default: [
+      { prompt: '$', command: 'git pull && npm install' },
+      { comment: '// Setting up project...' },
+      { code: '<span class="mockup-preview__keyword">import</span> { <span class="mockup-preview__variable">config</span> } <span class="mockup-preview__keyword">from</span> <span class="mockup-preview__string">\'./config\'</span>' },
+      { code: '<span class="mockup-preview__keyword">const</span> <span class="mockup-preview__variable">app</span> <span class="mockup-preview__operator">=</span> <span class="mockup-preview__function">init</span>(<span class="mockup-preview__variable">config</span>)' },
+      { code: '<span class="mockup-preview__variable">app</span>.<span class="mockup-preview__function">start</span>()' },
+      { comment: '// ✓ Ready' },
+    ]
+  };
+
+  function getSnippet(language) {
+    if (!language) return codeSnippets.default;
+    const lang = language.trim();
+    if (codeSnippets[lang]) return codeSnippets[lang];
+    // Map common languages
+    const map = {
+      'javascript': 'JavaScript',
+      'typescript': 'TypeScript',
+      'vue': 'Vue',
+      'php': 'PHP',
+      'python': 'Python',
+      'html': 'HTML',
+      'css': 'HTML',
+      'scss': 'HTML',
+    };
+    const mapped = map[lang.toLowerCase()];
+    return mapped ? codeSnippets[mapped] : codeSnippets.default;
+  }
+
+  function buildPreviewHTML(snippet) {
+    let lines = '';
+    snippet.forEach(item => {
+      if (item.prompt) {
+        lines += `<div class="mockup-preview__line">
+          <span class="mockup-preview__prompt">${item.prompt}</span>
+          <span class="mockup-preview__command">${item.command}</span>
+        </div>`;
+      } else if (item.comment) {
+        lines += `<div class="mockup-preview__line">
+          <span class="mockup-preview__comment">${item.comment}</span>
+        </div>`;
+      } else if (item.code) {
+        lines += `<div class="mockup-preview__line">${item.code}</div>`;
+      }
+    });
+
+    // Add blinking cursor to last line
+    lines += `<div class="mockup-preview__line"><span class="mockup-preview__cursor"></span></div>`;
+
+    return `
+      <div class="mockup-preview">
+        <span class="mockup-preview__play-indicator">
+          <span class="mockup-preview__play-dot"></span>
+          LIVE
+        </span>
+        <div class="mockup-preview__terminal">
+          ${lines}
+        </div>
+        <div class="mockup-preview__activity">
+          <div class="mockup-preview__activity-bar">
+            <div class="mockup-preview__activity-fill"></div>
+          </div>
+          <span class="mockup-preview__activity-label">compiling...</span>
+        </div>
+        <div class="mockup-preview__progress">
+          <div class="mockup-preview__progress-bar"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Watch for project cards being added to the DOM, then inject previews
+  function injectPreviews() {
+    const cards = document.querySelectorAll('.work__box');
+    cards.forEach(card => {
+      if (card.dataset.previewInjected) return;
+      card.dataset.previewInjected = 'true';
+
+      const screen = card.querySelector('.mockup-browser__screen');
+      if (!screen) return;
+
+      // Determine language from the card's tech list or repo data
+      let language = null;
+      const techList = card.querySelector('.work__list li');
+      if (techList) language = techList.textContent.trim();
+      // Fallback: check for mockup-github-card__lang
+      if (!language) {
+        const langEl = card.querySelector('.mockup-github-card__lang');
+        if (langEl && langEl.textContent !== 'Private') {
+          language = langEl.textContent.trim();
+        }
+      }
+
+      const snippet = getSnippet(language);
+      screen.insertAdjacentHTML('beforeend', buildPreviewHTML(snippet));
+    });
+  }
+
+  // Initial injection (for any static cards)
+  injectPreviews();
+
+  // Observe for dynamically added cards (GitHub fetch)
+  const projectContainer = document.getElementById('github-projects');
+  if (projectContainer) {
+    const observer = new MutationObserver(() => {
+      injectPreviews();
+    });
+    observer.observe(projectContainer, { childList: true, subtree: true });
+  }
+})();

@@ -1800,3 +1800,262 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
 .mockup-github-card__bar--med {
     width: 78%;
 }
+
+/* ========================================
+   HOVER VIDEO PREVIEW ANIMATION
+   Trending effect: card "plays" like a video on hover
+   ======================================== */
+
+/* Container for the animated preview overlay */
+.mockup-preview {
+    position: absolute;
+    inset: 0;
+    background: #0d1117;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.work__box:hover .mockup-preview {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+/* Play indicator pulse */
+.mockup-preview__play-indicator {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 1rem;
+    font-family: var(--font-mono);
+    color: var(--color-success);
+    opacity: 0;
+    transition: opacity 0.3s ease 0.3s;
+    z-index: 5;
+}
+
+.work__box:hover .mockup-preview__play-indicator {
+    opacity: 1;
+}
+
+.mockup-preview__play-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-success);
+    animation: playPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes playPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Terminal/code typing area */
+.mockup-preview__terminal {
+    flex: 1;
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    overflow: hidden;
+}
+
+.mockup-preview__line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0;
+    transform: translateY(8px);
+    white-space: nowrap;
+}
+
+.work__box:hover .mockup-preview__line {
+    animation: lineAppear 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.work__box:hover .mockup-preview__line:nth-child(1) { animation-delay: 0.2s; }
+.work__box:hover .mockup-preview__line:nth-child(2) { animation-delay: 0.5s; }
+.work__box:hover .mockup-preview__line:nth-child(3) { animation-delay: 0.8s; }
+.work__box:hover .mockup-preview__line:nth-child(4) { animation-delay: 1.1s; }
+.work__box:hover .mockup-preview__line:nth-child(5) { animation-delay: 1.4s; }
+.work__box:hover .mockup-preview__line:nth-child(6) { animation-delay: 1.7s; }
+.work__box:hover .mockup-preview__line:nth-child(7) { animation-delay: 2.0s; }
+
+@keyframes lineAppear {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mockup-preview__prompt {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+.mockup-preview__command {
+    color: #e6edf3;
+}
+
+.mockup-preview__comment {
+    color: #6a737d;
+}
+
+.mockup-preview__keyword {
+    color: #ff7b72;
+}
+
+.mockup-preview__string {
+    color: #a5d6ff;
+}
+
+.mockup-preview__function {
+    color: #d2a8ff;
+}
+
+.mockup-preview__variable {
+    color: #79c0ff;
+}
+
+.mockup-preview__operator {
+    color: #ff7b72;
+}
+
+/* Typing cursor blink */
+.mockup-preview__cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--color-accent-primary);
+    animation: cursorBlink 0.8s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+    opacity: 0;
+}
+
+.work__box:hover .mockup-preview__cursor {
+    opacity: 1;
+    animation-delay: 2.2s;
+}
+
+@keyframes cursorBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* Progress bar at bottom */
+.mockup-preview__progress {
+    height: 3px;
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.mockup-preview__progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: var(--color-accent-gradient);
+    border-radius: 0 2px 2px 0;
+}
+
+.work__box:hover .mockup-preview__progress-bar {
+    animation: progressFill 3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes progressFill {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* Make the mockup-browser__screen position relative for overlay */
+.mockup-browser__screen {
+    position: relative;
+}
+
+/* Hover glow effect on the mockup browser */
+.work__box:hover .mockup-browser {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.15), 0 0 60px rgba(99, 102, 241, 0.05);
+}
+
+/* Subtle scale on the image box during hover */
+.work__box:hover .work__image-box .mockup-browser {
+    transform: scale(1.02);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Activity bar animations inside preview */
+.mockup-preview__activity {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    flex-shrink: 0;
+}
+
+.mockup-preview__activity-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mockup-preview__activity-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 2px;
+    background: var(--color-accent-primary);
+}
+
+.work__box:hover .mockup-preview__activity-fill {
+    animation: activityPulse 2s ease-in-out infinite;
+}
+
+@keyframes activityPulse {
+    0% { width: 0; opacity: 0.5; }
+    50% { width: 70%; opacity: 1; }
+    100% { width: 100%; opacity: 0.3; }
+}
+
+.mockup-preview__activity-label {
+    font-size: 1rem;
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    white-space: nowrap;
+}
+
+/* Disable animation on reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .mockup-preview,
+    .mockup-preview__line,
+    .mockup-preview__cursor,
+    .mockup-preview__progress-bar,
+    .mockup-preview__activity-fill,
+    .mockup-preview__play-dot {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .mockup-preview__progress-bar {
+        width: 100% !important;
+    }
+}
