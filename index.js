@@ -235,8 +235,8 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
-  // GitHub PAT for fetching private repos (optional, empty by default to prevent secret exposure)
-  const GH_TOKEN = '';
+  // GitHub PAT for fetching private repos (read-only metadata access)
+  const GH_TOKEN = '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';
 
   // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
@@ -262,38 +262,11 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     return;
   }
 
-  // Static private repositories list to render alongside public repos
-  const STATIC_PRIVATE_REPOS = [
-    {
-      name: 'admin-dashboard-system',
-      description: 'Comprehensive administrative control panel with role-based access management, user permissions, and real-time analytics dashboard.',
-      language: 'PHP',
-      private: true,
-      topics: ['php', 'laravel', 'admin-panel', 'mysql', 'bootstrap'],
-      updated_at: new Date().toISOString(),
-      stargazers_count: 0,
-      forks_count: 0,
-      html_url: '#'
-    },
-    {
-      name: 'guest-profiling-system',
-      description: 'Guest record & profiling management application for security logging, visitor data tracking, and real-time attendance analytics.',
-      language: 'Vue',
-      private: true,
-      topics: ['vuejs', 'guest-management', 'profiling', 'tailwind-css', 'web-app'],
-      updated_at: new Date().toISOString(),
-      stargazers_count: 0,
-      forks_count: 0,
-      html_url: '#'
-    }
-  ];
-
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  // Filter out skipped repos and combine with static private repos
-  const fetchedPublicRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
-  const displayRepos = [...STATIC_PRIVATE_REPOS, ...fetchedPublicRepos];
+  // Filter out skipped repos
+  const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
 
   if (displayRepos.length === 0) return;
 
