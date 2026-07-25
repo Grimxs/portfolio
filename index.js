@@ -264,32 +264,43 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     console.warn('GitHub projects fetch failed:', err);
   }
 
-  // Parse private repos configured on data-private-repos
-  const privateRaw = workSection.dataset.privateRepos || workSection.dataset.private || '';
-  const privateSlugs = privateRaw.split(',').map(s => s.trim()).filter(Boolean);
-  const privateReposList = privateSlugs.map(slug => ({
-    name: slug,
-    description: 'Private repository — access restricted. Request access to view source code or demo.',
-    language: 'Private',
-    private: true,
-    topics: ['private', 'restricted'],
-    updated_at: new Date().toISOString(),
-    stargazers_count: 0,
-    forks_count: 0,
-    html_url: '#'
-  }));
+  // Featured projects list to include alongside fetched repos
+  const FEATURED_PROJECTS = [
+    {
+      name: 'admin-dashboard-system',
+      description: 'Comprehensive administrative control panel featuring role-based access management, user permissions, system activity logging, and real-time analytics dashboard.',
+      language: 'PHP',
+      private: false,
+      topics: ['php', 'laravel', 'admin-panel', 'mysql', 'bootstrap'],
+      updated_at: new Date().toISOString(),
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/abemelwin'
+    },
+    {
+      name: 'guest-profiling-system',
+      description: 'Guest record & profiling management application for security logging, visitor data tracking, automated check-in, and attendance reporting.',
+      language: 'Vue',
+      private: false,
+      topics: ['vuejs', 'guest-management', 'profiling', 'tailwind-css', 'web-app'],
+      updated_at: new Date().toISOString(),
+      stargazers_count: 0,
+      forks_count: 0,
+      html_url: 'https://github.com/abemelwin'
+    }
+  ];
 
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  // Filter out skipped repos and combine with private repos list
+  // Filter out skipped repos and combine with featured projects list
   const fetchedRepos = Array.isArray(repos) ? repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase())) : [];
   
-  // Deduplicate private repos if already present in fetchedRepos
+  // Deduplicate featured projects if already present in fetchedRepos
   const fetchedNames = new Set(fetchedRepos.map(r => r.name.toLowerCase()));
-  const extraPrivate = privateReposList.filter(p => !fetchedNames.has(p.name.toLowerCase()));
+  const extraFeatured = FEATURED_PROJECTS.filter(p => !fetchedNames.has(p.name.toLowerCase()));
 
-  const displayRepos = [...extraPrivate, ...fetchedRepos];
+  const displayRepos = [...extraFeatured, ...fetchedRepos];
 
   if (displayRepos.length === 0) return;
 
@@ -298,12 +309,11 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   // Build a card for each repo
   displayRepos.forEach((repo, index) => {
     const isReverse = index % 2 !== 0;
-    const isPrivate = repo.private;
+    const isPrivate = false; // Display all cards as unlocked normal projects
 
     const card = document.createElement('div');
     card.className = `work__box${isReverse ? ' work__box--reverse' : ''} fade-in visible`;
     card.dataset.repo = repo.name;
-    if (isPrivate) card.dataset.locked = 'true';
 
     // Format project name
     const formattedName = repo.name
