@@ -490,36 +490,174 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
    ======================================== */
 
 .header {
-    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1a2e 50%, #16213e 100%);
-    height: 100vh;
+    min-height: 200vh;
     font-size: var(--font-size-base);
     position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    overflow: visible;
 }
 
-.header::before {
+.nav-row {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-sticky);
+    padding-top: var(--space-4);
+    pointer-events: auto;
+}
+
+.hero-portal-wrapper {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 40%, #1e1b4b 0%, #0f0f12 70%);
+    padding: var(--space-6);
+}
+
+.hero-portal {
+    width: 88vw;
+    max-width: 1200px;
+    height: 75vh;
+    max-height: 720px;
+    transform-style: preserve-3d;
+    will-change: transform, opacity, border-radius, box-shadow;
+    transform: scale(0.9) rotateX(3deg);
+    position: relative;
+    background: rgba(22, 22, 30, 0.55);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 28px;
+    box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.8),
+        0 0 100px rgba(99, 102, 241, 0.25),
+        0 0 40px rgba(236, 72, 153, 0.15),
+        inset 0 1px 1px rgba(255, 255, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-10) var(--space-8);
+}
+
+/* Ambient glow orb inside portal */
+.hero-portal__ambient-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(236, 72, 153, 0.1) 40%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+/* Futuristic grid texture */
+.hero-portal__grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+    background-size: 50px 50px;
+    border-radius: 28px;
+    pointer-events: none;
+}
+
+/* Cyber Corner Brackets */
+.hero-portal__corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: rgba(139, 92, 246, 0.8);
+    border-style: solid;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.hero-portal__corner--tl {
+    top: 16px; left: 16px;
+    border-width: 2px 0 0 2px;
+    border-top-left-radius: 6px;
+}
+.hero-portal__corner--tr {
+    top: 16px; right: 16px;
+    border-width: 2px 2px 0 0;
+    border-top-right-radius: 6px;
+}
+.hero-portal__corner--bl {
+    bottom: 16px; left: 16px;
+    border-width: 0 0 2px 2px;
+    border-bottom-left-radius: 6px;
+}
+.hero-portal__corner--br {
+    bottom: 16px; right: 16px;
+    border-width: 0 2px 2px 0;
+    border-bottom-right-radius: 6px;
+}
+
+/* Floating Code Badges */
+.hero-portal__tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    background: rgba(15, 15, 20, 0.7);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    user-select: none;
+    letter-spacing: 0.05em;
+    animation: floatTag 6s ease-in-out infinite alternate;
+}
+
+.hero-portal__tag.tag-1 { top: 12%; left: 8%; animation-delay: 0s; }
+.hero-portal__tag.tag-2 { top: 15%; right: 8%; animation-delay: 1.5s; }
+.hero-portal__tag.tag-3 { bottom: 16%; left: 10%; animation-delay: 3s; }
+.hero-portal__tag.tag-4 { bottom: 18%; right: 12%; animation-delay: 4.5s; }
+
+@keyframes floatTag {
+    0% { transform: translateY(0px) rotate(-1deg); }
+    100% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@media (max-width: 768px) {
+    .hero-portal__tag { display: none; }
+    .hero-portal { width: 95vw; height: 80vh; padding: var(--space-6) var(--space-4); }
+}
+
+.hero-window-wrapper::before {
     content: '';
     position: absolute;
     top: -20%;
     right: -10%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
     border-radius: 50%;
     animation: headerOrb 8s ease-in-out infinite;
     pointer-events: none;
 }
 
-.header::after {
+.hero-window-wrapper::after {
     content: '';
     position: absolute;
     bottom: -10%;
     left: -5%;
     width: 400px;
     height: 400px;
-    background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
     border-radius: 50%;
     animation: headerOrb 10s ease-in-out infinite reverse;
     pointer-events: none;
@@ -533,9 +671,11 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
 .header__text-box {
     position: relative;
     z-index: 1;
-    height: 100%;
+    flex: 1;
     display: flex;
     align-items: center;
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-12);
 }
 
 .header__text-box::before {

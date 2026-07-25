@@ -1,4 +1,88 @@
 /* -----------------------------------------
+  3D Cyber Glass Hero Portal & Parallax
+ ---------------------------------------- */
+
+(function init3DHeroPortal() {
+  const initGSAP = () => {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const heroHeader = document.querySelector('.header');
+    const heroWrapper = document.querySelector('.hero-portal-wrapper');
+    const heroPortal = document.querySelector('.hero-portal');
+    const textContent = document.querySelector('.header__text');
+    const scrollIndicator = document.querySelector('.header__scroll');
+    const tags = document.querySelectorAll('.hero-portal__tag');
+
+    if (!heroPortal || !heroHeader || !heroWrapper) return;
+
+    // 1. Mouse 3D Tilt Parallax Effect
+    const xTo = gsap.quickTo(heroPortal, 'rotateY', { duration: 0.6, ease: 'power2.out' });
+    const yTo = gsap.quickTo(heroPortal, 'rotateX', { duration: 0.6, ease: 'power2.out' });
+
+    window.addEventListener('mousemove', (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 14;
+      const y = (e.clientY / innerHeight - 0.5) * -14;
+      xTo(x);
+      yTo(y);
+    });
+
+    // 2. GSAP ScrollTrigger Hyperspace Portal Zoom Animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroHeader,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        pin: heroWrapper,
+        anticipatePin: 1,
+      }
+    });
+
+    // Zoom portal outward seamlessly into the portfolio content
+    tl.to(heroPortal, {
+      scale: 2.2,
+      opacity: 0,
+      rotateX: 0,
+      rotateY: 0,
+      ease: 'power2.inOut',
+    }, 0)
+    .to(textContent, {
+      scale: 1.15,
+      opacity: 0,
+      y: -50,
+      ease: 'power2.in',
+    }, 0)
+    .to(scrollIndicator, {
+      opacity: 0,
+      y: 40,
+      ease: 'power1.out',
+    }, 0);
+
+    // Disperse tech tags outward with 3D depth
+    tags.forEach((tag, i) => {
+      const dirX = (i % 2 === 0 ? -1 : 1) * 220;
+      const dirY = (i < 2 ? -1 : 1) * 160;
+      tl.to(tag, {
+        x: dirX,
+        y: dirY,
+        opacity: 0,
+        scale: 1.6,
+        ease: 'power2.in',
+      }, 0);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGSAP);
+  } else {
+    initGSAP();
+  }
+})();
+
+/* -----------------------------------------
   Focus outline only for keyboard users
  ---------------------------------------- */
 
@@ -27,8 +111,8 @@ let isBackToTopRendered = false;
 
 const alterStyles = (visible) => {
   backToTopButton.style.visibility = visible ? 'visible' : 'hidden';
-  backToTopButton.style.opacity    = visible ? 1 : 0;
-  backToTopButton.style.transform  = visible ? 'scale(1)' : 'scale(0)';
+  backToTopButton.style.opacity = visible ? 1 : 0;
+  backToTopButton.style.transform = visible ? 'scale(1)' : 'scale(0)';
 };
 
 window.addEventListener('scroll', () => {
@@ -46,7 +130,7 @@ window.addEventListener('scroll', () => {
 function handleMailtoForm(e) {
   e.preventDefault();
   const form = e.target;
-  const btn  = form.querySelector('.contact__submit');
+  const btn = form.querySelector('.contact__submit');
 
   const name = form.querySelector('#c-name').value;
   const email = form.querySelector('#c-email').value;

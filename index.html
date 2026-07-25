@@ -29,9 +29,9 @@
   <!-- ***** Header ***** -->
 
   <header class="header" role="banner" id="top">
-    <div class="row">
+    <div class="row nav-row">
       <nav class="nav" role="navigation">
-        <div class="nav__logo"></div>
+        <a href="#top" class="nav__logo">MDA</a>
         <ul class="nav__items">
           <li class="nav__item"><a href="#work"       class="nav__link">Projects</a></li>
           <li class="nav__item"><a href="#experience" class="nav__link">Education & Experience</a></li>
@@ -41,24 +41,43 @@
       </nav>
     </div>
 
-    <div class="header__text-box row">
-      <div class="header__text">
-        <p class="header__greeting">Hello, I'm</p>
-        <h1 class="heading-primary">
-          <span>Melwin Dave D. Abe</span>
-        </h1>
-        <p class="header__role"><span class="header__role-bracket">&lt;</span>Full-Stack Developer<span class="header__role-bracket">/&gt;</span></p>
-        <p class="header__tagline">Building modern, scalable web applications with clean code and intuitive user experiences.</p>
-        <div class="header__cta">
-          <a href="#work" class="btn">View My Work</a>
-          <a href="#contact" class="btn btn--outline">Get in Touch</a>
+    <div class="hero-portal-wrapper">
+      <div class="hero-portal" id="hero-portal">
+        <div class="hero-portal__ambient-glow"></div>
+        <div class="hero-portal__grid-bg"></div>
+
+        <!-- Cyber Corner Accents -->
+        <span class="hero-portal__corner hero-portal__corner--tl"></span>
+        <span class="hero-portal__corner hero-portal__corner--tr"></span>
+        <span class="hero-portal__corner hero-portal__corner--bl"></span>
+        <span class="hero-portal__corner hero-portal__corner--br"></span>
+
+        <!-- Floating Code Particle Badges -->
+        <div class="hero-portal__tag tag-1">&lt;Vue.js /&gt;</div>
+        <div class="hero-portal__tag tag-2">&lt;PHP Laravel /&gt;</div>
+        <div class="hero-portal__tag tag-3">{ Full-Stack }</div>
+        <div class="hero-portal__tag tag-4">async/await</div>
+
+        <div class="header__text-box">
+          <div class="header__text">
+            <p class="header__greeting">Hello, I'm</p>
+            <h1 class="heading-primary">
+              <span>Melwin Dave D. Abe</span>
+            </h1>
+            <p class="header__role"><span class="header__role-bracket">&lt;</span>Full-Stack Developer<span class="header__role-bracket">/&gt;</span></p>
+            <p class="header__tagline">Building modern, scalable web applications with clean code and intuitive user experiences.</p>
+            <div class="header__cta">
+              <a href="#work" class="btn">View My Work</a>
+              <a href="#contact" class="btn btn--outline">Get in Touch</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="header__scroll" aria-hidden="true">
       <div class="header__scroll-mouse"><div class="header__scroll-wheel"></div></div>
-      <span class="header__scroll-label">Scroll</span>
+      <span class="header__scroll-label">Scroll to Explore</span>
     </div>
   </header>
 
@@ -339,3 +358,10 @@
     </form>
   </div>
 </div>
+
+  <!-- GSAP & ScrollTrigger Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
