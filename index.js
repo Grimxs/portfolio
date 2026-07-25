@@ -264,13 +264,32 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     console.warn('GitHub projects fetch failed:', err);
   }
 
+  // Parse private repos configured on data-private-repos
+  const privateRaw = workSection.dataset.privateRepos || workSection.dataset.private || '';
+  const privateSlugs = privateRaw.split(',').map(s => s.trim()).filter(Boolean);
+  const privateReposList = privateSlugs.map(slug => ({
+    name: slug,
+    description: 'Private repository — access restricted. Request access to view source code or demo.',
+    language: 'Private',
+    private: true,
+    topics: ['private', 'restricted'],
+    updated_at: new Date().toISOString(),
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: '#'
+  }));
+
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  if (!Array.isArray(repos) || repos.length === 0) return;
+  // Filter out skipped repos and combine with private repos list
+  const fetchedRepos = Array.isArray(repos) ? repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase())) : [];
+  
+  // Deduplicate private repos if already present in fetchedRepos
+  const fetchedNames = new Set(fetchedRepos.map(r => r.name.toLowerCase()));
+  const extraPrivate = privateReposList.filter(p => !fetchedNames.has(p.name.toLowerCase()));
 
-  // Filter out skipped repos
-  const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
+  const displayRepos = [...extraPrivate, ...fetchedRepos];
 
   if (displayRepos.length === 0) return;
 
