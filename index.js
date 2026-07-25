@@ -247,69 +247,30 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let repos = [];
   try {
-    const headers = { Accept: 'application/vnd.github+json' };
-    let endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
-    if (GH_TOKEN) {
-      headers.Authorization = `Bearer ${GH_TOKEN}`;
-      endpoint = `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`;
-    }
-    const res = await fetch(endpoint, { headers });
+    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
     if (res.ok) {
       repos = await res.json();
-    } else {
-      const fallbackRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-      if (fallbackRes.ok) repos = await fallbackRes.json();
     }
   } catch (err) {
     console.warn('GitHub projects fetch failed:', err);
   }
 
-  // Featured projects list to include alongside fetched repos
-  const FEATURED_PROJECTS = [
-    {
-      name: 'admin-dashboard-system',
-      description: 'Comprehensive administrative control panel featuring role-based access management, user permissions, system activity logging, and real-time analytics dashboard.',
-      language: 'PHP',
-      private: false,
-      topics: ['php', 'laravel', 'admin-panel', 'mysql', 'bootstrap'],
-      updated_at: new Date().toISOString(),
-      stargazers_count: 0,
-      forks_count: 0,
-      html_url: 'https://github.com/abemelwin'
-    },
-    {
-      name: 'guest-profiling-system',
-      description: 'Guest record & profiling management application for security logging, visitor data tracking, automated check-in, and attendance reporting.',
-      language: 'Vue',
-      private: false,
-      topics: ['vuejs', 'guest-management', 'profiling', 'tailwind-css', 'web-app'],
-      updated_at: new Date().toISOString(),
-      stargazers_count: 0,
-      forks_count: 0,
-      html_url: 'https://github.com/abemelwin'
-    }
-  ];
-
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  // Filter out skipped repos and combine with featured projects list
-  const fetchedRepos = Array.isArray(repos) ? repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase())) : [];
-  
-  // Deduplicate featured projects if already present in fetchedRepos
-  const fetchedNames = new Set(fetchedRepos.map(r => r.name.toLowerCase()));
-  const extraFeatured = FEATURED_PROJECTS.filter(p => !fetchedNames.has(p.name.toLowerCase()));
+  if (!Array.isArray(repos) || repos.length === 0) return;
 
-  const displayRepos = [...extraFeatured, ...fetchedRepos];
+  // Filter out skipped repos (portfolio, .github, profile readme)
+  const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
 
   if (displayRepos.length === 0) return;
 
   container.innerHTML = '';
 
-  // Build a card for each repo
+  // Build a card for each real repo
   displayRepos.forEach((repo, index) => {
     const isReverse = index % 2 !== 0;
-    const isPrivate = false; // Display all cards as unlocked normal projects
+    const isPrivate = repo.private;
 
     const card = document.createElement('div');
     card.className = `work__box${isReverse ? ' work__box--reverse' : ''} fade-in visible`;
