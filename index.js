@@ -235,6 +235,9 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
+  // GitHub PAT for fetching private repos (read-only metadata access)
+  const GH_TOKEN = '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';
+
   // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
     username.toLowerCase(),
@@ -244,9 +247,18 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let repos = [];
   try {
-    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+    const headers = { Accept: 'application/vnd.github+json' };
+    let endpoint = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`;
+    if (GH_TOKEN) {
+      headers.Authorization = `Bearer ${GH_TOKEN}`;
+      endpoint = `https://api.github.com/user/repos?per_page=100&sort=updated&affiliation=owner`;
+    }
+    const res = await fetch(endpoint, { headers });
     if (res.ok) {
       repos = await res.json();
+    } else {
+      const fallbackRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
+      if (fallbackRes.ok) repos = await fallbackRes.json();
     }
   } catch (err) {
     console.warn('GitHub projects fetch failed:', err);
