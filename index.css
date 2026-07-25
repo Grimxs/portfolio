@@ -497,13 +497,17 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
 }
 
 .nav-row {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: var(--z-sticky);
-    padding-top: var(--space-4);
-    pointer-events: auto;
+    background: rgba(15, 15, 18, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: var(--space-2) 0;
+    width: 100%;
 }
 
 .hero-portal-wrapper {
