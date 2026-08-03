@@ -9,9 +9,15 @@
 
   <meta name="description" content="Melwin Dave D. Abe — Full-stack developer specializing in Vue.js, PHP, and modern web technologies. Building clean, scalable web applications." />
   <meta name="keywords" content="Melwin Dave Abe, Full Stack Developer, Vue.js Developer, PHP Developer, Web Developer, JavaScript, Tailwind CSS" />
+  <meta name="author" content="Melwin Dave D. Abe" />
+  <meta name="theme-color" content="#0f0f12" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://abemelwin.github.io/portfolio/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://abemelwin.github.io/portfolio/" />
   <meta property="og:title" content="Melwin Dave D. Abe | Full-Stack Developer" />
   <meta property="og:description" content="Full-stack developer specializing in Vue.js, PHP, and modern web technologies." />
   <meta property="og:image" content="./images/abe.jpg" />
@@ -20,6 +26,18 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Melwin Dave D. Abe | Full-Stack Developer" />
   <meta property="twitter:description" content="Full-stack developer specializing in Vue.js, PHP, and modern web technologies." />
+  <meta property="twitter:image" content="./images/abe.jpg" />
+
+  <!-- Favicon (uses GitHub avatar as SVG fallback) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' font-family='system-ui,sans-serif' fill='white'>M</text></svg>" />
+
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="./fonts/HKGrotesk-Regular.woff" as="font" type="font/woff" crossorigin="anonymous" />
+  <link rel="preload" href="./fonts/Jost-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
+
+  <!-- GSAP — loaded in <head> so it's available when index.js runs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <link rel="stylesheet" href="index.css" />
 </head>
@@ -30,11 +48,11 @@
 
   <header class="header" role="banner" id="top">
     <div class="row nav-row">
-      <nav class="nav" role="navigation">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
         <a href="#top" class="nav__logo">MDA</a>
         <ul class="nav__items">
           <li class="nav__item"><a href="#work"       class="nav__link">Projects</a></li>
-          <li class="nav__item"><a href="#experience" class="nav__link">Education & Experience</a></li>
+          <li class="nav__item"><a href="#experience" class="nav__link">Education &amp; Experience</a></li>
           <li class="nav__item"><a href="#about"      class="nav__link">About</a></li>
           <li class="nav__item"><a href="#contact"    class="nav__link">Contact</a></li>
         </ul>
@@ -43,20 +61,20 @@
 
     <div class="hero-portal-wrapper">
       <div class="hero-portal" id="hero-portal">
-        <div class="hero-portal__ambient-glow"></div>
-        <div class="hero-portal__grid-bg"></div>
+        <div class="hero-portal__ambient-glow" aria-hidden="true"></div>
+        <div class="hero-portal__grid-bg" aria-hidden="true"></div>
 
         <!-- Cyber Corner Accents -->
-        <span class="hero-portal__corner hero-portal__corner--tl"></span>
-        <span class="hero-portal__corner hero-portal__corner--tr"></span>
-        <span class="hero-portal__corner hero-portal__corner--bl"></span>
-        <span class="hero-portal__corner hero-portal__corner--br"></span>
+        <span class="hero-portal__corner hero-portal__corner--tl" aria-hidden="true"></span>
+        <span class="hero-portal__corner hero-portal__corner--tr" aria-hidden="true"></span>
+        <span class="hero-portal__corner hero-portal__corner--bl" aria-hidden="true"></span>
+        <span class="hero-portal__corner hero-portal__corner--br" aria-hidden="true"></span>
 
         <!-- Floating Code Particle Badges -->
-        <div class="hero-portal__tag tag-1">&lt;Vue.js /&gt;</div>
-        <div class="hero-portal__tag tag-2">&lt;PHP Laravel /&gt;</div>
-        <div class="hero-portal__tag tag-3">{ Full-Stack }</div>
-        <div class="hero-portal__tag tag-4">async/await</div>
+        <div class="hero-portal__tag tag-1" aria-hidden="true">&lt;Vue.js /&gt;</div>
+        <div class="hero-portal__tag tag-2" aria-hidden="true">&lt;PHP Laravel /&gt;</div>
+        <div class="hero-portal__tag tag-3" aria-hidden="true">{ Full-Stack }</div>
+        <div class="hero-portal__tag tag-4" aria-hidden="true">async/await</div>
 
         <div class="header__text-box">
           <div class="header__text">
@@ -64,7 +82,7 @@
             <h1 class="heading-primary">
               <span>Melwin Dave D. Abe</span>
             </h1>
-            <p class="header__role"><span class="header__role-bracket">&lt;</span>Full-Stack Developer<span class="header__role-bracket">/&gt;</span></p>
+            <p class="header__role"><span class="header__role-bracket" aria-hidden="true">&lt;</span>Full-Stack Developer<span class="header__role-bracket" aria-hidden="true">/&gt;</span></p>
             <p class="header__tagline">Building modern, scalable web applications with clean code and intuitive user experiences.</p>
             <div class="header__cta">
               <a href="#work" class="btn">View My Work</a>
@@ -91,7 +109,7 @@
         <p class="work__subtitle">A collection of projects I've built — automatically synced from my GitHub.</p>
 
         <!-- Loading skeleton (shown while fetching) -->
-        <div id="github-loading" class="github-loading">
+        <div id="github-loading" class="github-loading" aria-label="Loading projects…" role="status">
           <div class="github-loading__card">
             <div class="github-loading__shimmer github-loading__shimmer--tag"></div>
             <div class="github-loading__shimmer github-loading__shimmer--title"></div>
@@ -120,12 +138,11 @@
 
     <section class="experience" id="experience">
       <div class="row">
-        <h2>Education & Experience</h2>
+        <h2>Education &amp; Experience</h2>
         <div class="timeline">
 
-
           <div class="timeline__item fade-in">
-            <div class="timeline__dot"></div>
+            <div class="timeline__dot" aria-hidden="true"></div>
             <div class="timeline__content">
               <div class="timeline__header">
                 <h3 class="timeline__role">Web Developer</h3>
@@ -133,15 +150,12 @@
               </div>
               <p class="timeline__company">ES Print Media Inc.</p>
               <p class="timeline__desc">Developing full-stack web applications with modern technologies. Delivering end-to-end solutions from database architecture to responsive user interfaces.</p>
-              <ul class="timeline__tags">
-                <!-- <li>Vue.js</li><li>PHP</li><li>MySQL</li><li>Tailwind CSS</li> -->
-              </ul>
+              <ul class="timeline__tags"></ul>
             </div>
           </div>
 
-
           <div class="timeline__item fade-in">
-            <div class="timeline__dot"></div>
+            <div class="timeline__dot" aria-hidden="true"></div>
             <div class="timeline__content">
               <div class="timeline__header">
                 <h3 class="timeline__role">Full-Stack Developer</h3>
@@ -149,24 +163,19 @@
               </div>
               <p class="timeline__company">Freelance</p>
               <p class="timeline__desc">Building custom web applications for diverse clients. Specializing in full-stack development with Vue.js and PHP, creating scalable solutions from concept to deployment.</p>
-              <ul class="timeline__tags">
-                <!-- <li>Vue.js</li><li>PHP</li><li>MySQL</li><li>Tailwind CSS</li> -->
-              </ul>
+              <ul class="timeline__tags"></ul>
             </div>
           </div>
 
           <div class="timeline__item fade-in">
-            <div class="timeline__dot"></div>
+            <div class="timeline__dot" aria-hidden="true"></div>
             <div class="timeline__content">
               <div class="timeline__header">
                 <h3 class="timeline__role">Bachelor of Science Computer Engineering</h3>
                 <span class="timeline__period">Graduated 2022</span>
               </div>
               <p class="timeline__company">STI College Batangas / Academic</p>
-              <!-- <p class="timeline__desc">Project leader</p> -->
-              <ul class="timeline__tags">
-                <!-- <li>Algorithms</li><li>OOP</li><li>Web Dev</li><li>Git</li> -->
-              </ul>
+              <ul class="timeline__tags"></ul>
             </div>
           </div>
 
@@ -188,31 +197,16 @@
               With a strong foundation in both frontend and backend development, I transform complex requirements into scalable solutions. From database architecture to responsive interfaces, I ensure every aspect of the application is built to professional standards.
             </p>
 
-            <!-- <div class="about__stats">
-              <div class="about__stat">
-                <span class="about__stat-num" data-target="2">0</span><span class="about__stat-plus">+</span>
-                <span class="about__stat-label">Years Coding</span>
-              </div>
-              <div class="about__stat">
-                <span class="about__stat-num" data-target="5">0</span><span class="about__stat-plus">+</span>
-                <span class="about__stat-label">Projects Built</span>
-              </div>
-              <div class="about__stat">
-                <span class="about__stat-num" data-target="3">0</span><span class="about__stat-plus">+</span>
-                <span class="about__stat-label">Tech Stacks</span>
-              </div>
-            </div> -->
-
             <p class="about__skills-label">Technologies I work with</p>
             <div class="about__skills">
-              <span class="about__skills-group">Modern Frontend & State Management</span>
+              <span class="about__skills-group">Modern Frontend &amp; State Management</span>
               <span class="skill-tag">TypeScript</span>
               <span class="skill-tag">Next.js</span>
               <span class="skill-tag">Nuxt.js</span>
               <span class="skill-tag">Vue.js</span>
               <span class="skill-tag">React</span>
               <span class="skill-tag">Tailwind CSS</span>
-              <span class="about__skills-group">Backend & Databases</span>
+              <span class="about__skills-group">Backend &amp; Databases</span>
               <span class="skill-tag">PHP</span>
               <span class="skill-tag">Laravel</span>
               <span class="skill-tag">Node.js</span>
@@ -220,7 +214,7 @@
               <span class="skill-tag">MySQL</span>
               <span class="skill-tag">PostgreSQL</span>
               <span class="skill-tag">MongoDB</span>
-              <span class="about__skills-group">Tools & Platforms</span>
+              <span class="about__skills-group">Tools &amp; Platforms</span>
               <span class="skill-tag">Docker</span>
               <span class="skill-tag">Git</span>
               <span class="skill-tag">REST APIs</span>
@@ -235,10 +229,10 @@
             <a href="ABE_MELWIN DAVE_RESUME.pdf" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">Download Resume</a>
           </div>
 
-          <div class="about__visual">
+          <div class="about__visual" aria-hidden="true">
             <div class="about__visual-content">
               <div class="about__visual-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="16 18 22 12 16 6"></polyline>
                   <polyline points="8 6 2 12 8 18"></polyline>
                 </svg>
@@ -270,15 +264,16 @@
           method="POST"
           enctype="text/plain"
           onsubmit="handleMailtoForm(event)"
+          novalidate
         >
           <div class="contact__form-group">
             <div class="contact__field">
               <label class="contact__label" for="c-name">Name</label>
-              <input id="c-name" type="text" name="name" class="contact__input" placeholder="Your Name" required />
+              <input id="c-name" type="text" name="name" class="contact__input" placeholder="Your Name" required autocomplete="name" />
             </div>
             <div class="contact__field">
               <label class="contact__label" for="c-email">Email</label>
-              <input id="c-email" type="email" name="email" class="contact__input" placeholder="Your Email" required />
+              <input id="c-email" type="email" name="email" class="contact__input" placeholder="Your Email" required autocomplete="email" />
             </div>
           </div>
           <div class="contact__field">
@@ -287,8 +282,6 @@
           </div>
           <button type="submit" class="btn contact__submit">Send Message</button>
         </form>
-        <!-- <p class="contact__or">Or reach me directly at</p>
-        <a href="mailto:abemelwin01@gmail.com" class="btn btn--secondary">abemelwin01@gmail.com</a> -->
       </div>
     </div>
   </section>
@@ -300,15 +293,16 @@
       <ul class="footer__social-links">
         <li class="footer__social-link-item">
           <a href="https://github.com/abemelwin" title="GitHub Profile" target="_blank" rel="noopener noreferrer">
-            <img src="./images/github.svg" class="footer__social-image" alt="Github">
+            <img src="./images/github.svg" class="footer__social-image" alt="GitHub" width="30" height="30" loading="lazy" />
           </a>
         </li>
         <li class="footer__social-link-item">
           <a href="mailto:abemelwin01@gmail.com" title="Send Email" class="footer__email-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <rect width="20" height="16" x="2" y="4" rx="2"/>
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
+            <span class="sr-only">Email me</span>
           </a>
         </li>
       </ul>
@@ -319,49 +313,43 @@
     </div>
   </footer>
 
-  <a href="#top" class="back-to-top" title="Back to Top">
-    <img src="./images/arrow-up.svg" alt="Back to Top" class="back-to-top__image"/>
+  <a href="#top" class="back-to-top" title="Back to Top" aria-label="Back to top">
+    <img src="./images/arrow-up.svg" alt="" class="back-to-top__image" width="24" height="24" aria-hidden="true" />
   </a>
 
-  <script src="./index.js"></script>
-</body>
-
-</html>
-
-<!-- Request Access Modal -->
-<div id="request-access-modal" class="request-access-modal" aria-hidden="true">
-  <div class="request-access-modal__overlay" data-action="close"></div>
-  <div class="request-access-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="request-access-title">
-    <button class="request-access-modal__close" aria-label="Close" data-action="close">×</button>
-    <h3 id="request-access-title">Request Access</h3>
-    <p class="request-access-modal__subtitle">Send a request to access this private repository. I will review and reply by email.</p>
-    <form id="request-access-form" class="request-access-form">
-      <input type="hidden" name="_subject" value="Access Request from Portfolio">
-      <input type="hidden" name="project" id="request-project" value="">
-      <div class="form-row">
-        <label for="ra-name">Your name</label>
-        <input id="ra-name" name="name" required />
-      </div>
-      <div class="form-row">
-        <label for="ra-email">Your email</label>
-        <input id="ra-email" name="email" type="email" required />
-      </div>
-      <div class="form-row">
-        <label for="ra-message">Message</label>
-        <textarea id="ra-message" name="message" rows="4" required></textarea>
-      </div>
-      <div class="form-actions">
-        <button type="submit" class="btn">Send Request</button>
-        <button type="button" class="btn btn--outline" data-action="close">Cancel</button>
-      </div>
-      <div id="ra-status" class="ra-status" aria-live="polite"></div>
-    </form>
+  <!-- Request Access Modal (inside body, before closing tag) -->
+  <div id="request-access-modal" class="request-access-modal" aria-hidden="true" role="presentation">
+    <div class="request-access-modal__overlay" data-action="close" aria-hidden="true"></div>
+    <div class="request-access-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="request-access-title">
+      <button class="request-access-modal__close" aria-label="Close dialog" data-action="close">&times;</button>
+      <h3 id="request-access-title">Request Access</h3>
+      <p class="request-access-modal__subtitle">Send a request to access this private repository. I will review and reply by email.</p>
+      <form id="request-access-form" class="request-access-form">
+        <input type="hidden" name="_subject" value="Access Request from Portfolio" />
+        <input type="hidden" name="project" id="request-project" value="" />
+        <div class="form-row">
+          <label for="ra-name">Your name</label>
+          <input id="ra-name" name="name" required autocomplete="name" />
+        </div>
+        <div class="form-row">
+          <label for="ra-email">Your email</label>
+          <input id="ra-email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="form-row">
+          <label for="ra-message">Message</label>
+          <textarea id="ra-message" name="message" rows="4" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Send Request</button>
+          <button type="button" class="btn btn--outline" data-action="close">Cancel</button>
+        </div>
+        <div id="ra-status" class="ra-status" aria-live="polite"></div>
+      </form>
+    </div>
   </div>
-</div>
 
-  <!-- GSAP & ScrollTrigger Animation Libraries -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="index.js"></script>
+  <!-- index.js loaded once, after GSAP (defer ensures correct order) -->
+  <script src="./index.js" defer></script>
+
 </body>
 </html>

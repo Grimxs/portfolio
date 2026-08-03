@@ -27,7 +27,7 @@
       const y = (e.clientY / innerHeight - 0.5) * -14;
       xTo(x);
       yTo(y);
-    });
+    }, { passive: true });
 
     // 2. GSAP ScrollTrigger Hyperspace Portal Zoom Animation
     const tl = gsap.timeline({
@@ -109,19 +109,13 @@ window.addEventListener('keydown', handleFirstTab);
 const backToTopButton = document.querySelector('.back-to-top');
 let isBackToTopRendered = false;
 
-const alterStyles = (visible) => {
-  backToTopButton.style.visibility = visible ? 'visible' : 'hidden';
-  backToTopButton.style.opacity = visible ? 1 : 0;
-  backToTopButton.style.transform = visible ? 'scale(1)' : 'scale(0)';
-};
-
 window.addEventListener('scroll', () => {
   const visible = window.scrollY > 700;
   if (visible !== isBackToTopRendered) {
     isBackToTopRendered = visible;
-    alterStyles(visible);
+    backToTopButton.classList.toggle('visible', visible);
   }
-});
+}, { passive: true });
 
 /* -----------------------------------------
   Contact form handler (Mailto)
@@ -235,9 +229,6 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
-  // GitHub PAT for fetching private repos (read-only metadata access)
-  const GH_TOKEN = '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';
-
   // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
     username.toLowerCase(),
@@ -283,8 +274,14 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
       .replace(/\b\w/g, l => l.toUpperCase());
 
     // Determine tag
-    const getTag = (language, isPrivate) => {
+    const getTag = (language, isPrivate, topics = []) => {
       if (isPrivate) return 'Private Project';
+      const t = topics.map(t => t.toLowerCase());
+      // Check topics first for more accurate classification
+      if (t.some(t => ['android', 'ios', 'react-native', 'native', 'expo', 'flutter', 'mobile'].includes(t))) return 'Mobile App';
+      if (t.some(t => ['cli', 'terminal', 'command-line', 'shell'].includes(t))) return 'CLI Tool';
+      if (t.some(t => ['api', 'rest-api', 'graphql', 'backend', 'server'].includes(t))) return 'Backend';
+      if (t.some(t => ['fullstack', 'full-stack'].includes(t))) return 'Full-Stack';
       if (!language) return 'Project';
       const l = language.toLowerCase();
       if (['javascript', 'typescript', 'vue', 'react'].includes(l)) return 'Web App';
@@ -365,7 +362,7 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     card.innerHTML = `
       <div class="work__text">
-        <span class="work__tag">${getTag(repo.language, isPrivate)}</span>
+        <span class="work__tag">${getTag(repo.language, isPrivate, repo.topics || [])}</span>
         <h3>${escapeHtml(formattedName)}</h3>
         <p class="work__desc">${escapeHtml(description)}</p>
         <ul class="work__list">
