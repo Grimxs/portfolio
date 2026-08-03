@@ -519,7 +519,7 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
     align-items: center;
     justify-content: center;
     perspective: 1200px;
-    overflow: hidden;
+    overflow: clip;
     background: radial-gradient(circle at 50% 40%, #1e1b4b 0%, #0f0f12 70%);
     padding: var(--space-6);
 }
@@ -536,7 +536,7 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
     background: rgba(22, 22, 30, 0.55);
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px);
-    border: 1px solid rgba(99, 102, 241, 0.25);
+    border: none;
     border-radius: 28px;
     box-shadow: 
         0 30px 80px rgba(0, 0, 0, 0.8),
@@ -548,7 +548,7 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
     justify-content: center;
     align-items: center;
     padding: var(--space-10) var(--space-8);
-}
+    overflow: visible;
 
 /* Ambient glow orb inside portal */
 .hero-portal__ambient-glow {
@@ -2334,45 +2334,35 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
    ANIMATED GRADIENT PORTAL BORDER
    ======================================== */
 
-.hero-portal {
-    position: relative;
-}
-
 .hero-portal::after {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: 30px;
-    background: conic-gradient(
-        from var(--portal-angle, 0deg),
+    background: linear-gradient(
+        var(--portal-angle-deg, 135deg),
         #6366f1,
         #8b5cf6,
         #ec4899,
-        #6366f1,
-        transparent 50%,
-        transparent 75%,
         #6366f1
     );
+    background-size: 300% 300%;
     -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     padding: 2px;
-    animation: portalBorderSpin 4s linear infinite;
-    opacity: 0.7;
+    animation: portalBorderShift 4s ease infinite;
+    opacity: 0.8;
     pointer-events: none;
     z-index: 0;
 }
 
-@property --portal-angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-}
-
-@keyframes portalBorderSpin {
-    to { --portal-angle: 360deg; }
+@keyframes portalBorderShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* ========================================
