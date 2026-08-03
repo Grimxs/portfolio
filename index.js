@@ -1,14 +1,24 @@
 /* -----------------------------------------
-  Scroll Progress Bar
+  Scroll Progress Bar + Nav Shadow
  ---------------------------------------- */
 
 (function initScrollProgress() {
   const bar = document.getElementById('scroll-progress-bar');
-  if (!bar) return;
+  const navRow = document.querySelector('.nav-row');
+
   window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+
+    // Progress bar
+    if (bar) {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    }
+
+    // Nav shadow on scroll
+    if (navRow) {
+      navRow.classList.toggle('scrolled', scrollTop > 20);
+    }
   }, { passive: true });
 })();
 
