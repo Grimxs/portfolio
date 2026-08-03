@@ -565,6 +565,7 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
     align-items: center;
     padding: var(--space-10) var(--space-8);
     overflow: visible;
+}
 
 /* Ambient glow orb inside portal */
 .hero-portal__ambient-glow {
