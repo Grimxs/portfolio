@@ -1,4 +1,182 @@
 /* -----------------------------------------
+  Scroll Progress Bar
+ ---------------------------------------- */
+
+(function initScrollProgress() {
+  const bar = document.getElementById('scroll-progress-bar');
+  if (!bar) return;
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+  }, { passive: true });
+})();
+
+/* -----------------------------------------
+  Typewriter Role Cycler
+ ---------------------------------------- */
+
+(function initTypewriter() {
+  const el = document.querySelector('.hero-typewriter');
+  if (!el) return;
+
+  const roles = [
+    'Full-Stack Developer',
+    'Vue.js Engineer',
+    'PHP / Laravel Dev',
+    'Mobile App Builder',
+    'UI Craftsman',
+  ];
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  const TYPING_SPEED = 70;
+  const DELETE_SPEED = 40;
+  const PAUSE_END = 1800;
+  const PAUSE_START = 300;
+
+  function tick() {
+    const current = roles[roleIndex];
+    if (isDeleting) {
+      charIndex--;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        setTimeout(tick, PAUSE_START);
+        return;
+      }
+      setTimeout(tick, DELETE_SPEED);
+    } else {
+      charIndex++;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        isDeleting = true;
+        setTimeout(tick, PAUSE_END);
+        return;
+      }
+      setTimeout(tick, TYPING_SPEED);
+    }
+  }
+
+  // Start after a short delay so page load feels clean
+  setTimeout(tick, 600);
+})();
+
+/* -----------------------------------------
+  Particle Network Canvas
+ ---------------------------------------- */
+
+(function initParticles() {
+  const canvas = document.querySelector('.hero-portal__particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const PARTICLE_COUNT = 55;
+  const CONNECTION_DIST = 120;
+  const SPEED = 0.35;
+  let W, H, particles;
+
+  function resize() {
+    const portal = canvas.parentElement;
+    W = canvas.width  = portal.offsetWidth;
+    H = canvas.height = portal.offsetHeight;
+  }
+
+  function makeParticle() {
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * SPEED,
+      vy: (Math.random() - 0.5) * SPEED,
+      r: Math.random() * 1.8 + 0.8,
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: PARTICLE_COUNT }, makeParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Move
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > W) p.vx *= -1;
+      if (p.y < 0 || p.y > H) p.vy *= -1;
+    }
+
+    // Connections
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CONNECTION_DIST) {
+          const alpha = (1 - dist / CONNECTION_DIST) * 0.4;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(139, 92, 246, ${alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Dots
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(99, 102, 241, 0.7)';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  // Only run if not reduced-motion
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    init();
+    draw();
+    window.addEventListener('resize', () => {
+      resize();
+      particles = Array.from({ length: PARTICLE_COUNT }, makeParticle);
+    }, { passive: true });
+  }
+})();
+
+/* -----------------------------------------
+  Active Nav Link on Scroll
+ ---------------------------------------- */
+
+(function initActiveNav() {
+  const sections = ['work', 'experience', 'about', 'contact'];
+  const links = {};
+  sections.forEach(id => {
+    links[id] = document.querySelector(`.nav__link[href="#${id}"]`);
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if (links[id]) {
+        links[id].classList.toggle('nav__link--active', entry.isIntersecting);
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+})();
+
+/* -----------------------------------------
   3D Cyber Glass Hero Portal & Parallax
  ---------------------------------------- */
 

@@ -2261,3 +2261,161 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
         transition: none;
     }
 }
+
+/* ========================================
+   SCROLL PROGRESS BAR
+   ======================================== */
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: calc(var(--z-fixed) + 10);
+    background: transparent;
+    pointer-events: none;
+}
+
+.scroll-progress__bar {
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent-gradient);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.6), 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+/* ========================================
+   HERO NAME SHIMMER ON LOAD
+   ======================================== */
+
+.hero-name {
+    display: inline-block;
+    background: linear-gradient(
+        90deg,
+        #6366f1 0%,
+        #8b5cf6 25%,
+        #ec4899 50%,
+        #ffffff 60%,
+        #ec4899 70%,
+        #8b5cf6 80%,
+        #6366f1 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: heroNameShimmer 4s linear infinite;
+}
+
+@keyframes heroNameShimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+}
+
+/* ========================================
+   TYPEWRITER ROLE TEXT
+   ======================================== */
+
+.hero-typewriter {
+    display: inline;
+}
+
+.hero-typewriter::after {
+    content: '|';
+    display: inline-block;
+    color: var(--color-accent-primary);
+    animation: cursorBlink 0.7s step-end infinite;
+    margin-left: 2px;
+    font-weight: 300;
+}
+
+/* ========================================
+   ANIMATED GRADIENT PORTAL BORDER
+   ======================================== */
+
+.hero-portal {
+    position: relative;
+}
+
+.hero-portal::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 30px;
+    background: conic-gradient(
+        from var(--portal-angle, 0deg),
+        #6366f1,
+        #8b5cf6,
+        #ec4899,
+        #6366f1,
+        transparent 50%,
+        transparent 75%,
+        #6366f1
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 2px;
+    animation: portalBorderSpin 4s linear infinite;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@property --portal-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@keyframes portalBorderSpin {
+    to { --portal-angle: 360deg; }
+}
+
+/* ========================================
+   PARTICLE CANVAS
+   ======================================== */
+
+.hero-portal__particles {
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.55;
+}
+
+/* ========================================
+   ACTIVE NAV LINK
+   ======================================== */
+
+.nav__link--active {
+    color: var(--color-accent-primary) !important;
+}
+
+.nav__link--active::after {
+    width: 100% !important;
+}
+
+/* ========================================
+   REDUCED MOTION — new additions
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-name {
+        animation: none;
+        background: var(--color-accent-gradient);
+    }
+    .hero-typewriter::after {
+        animation: none;
+    }
+    .hero-portal::after {
+        animation: none;
+    }
+    .scroll-progress__bar {
+        transition: none;
+    }
+}

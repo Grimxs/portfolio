@@ -44,6 +44,9 @@
 
 <body>
 
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar" id="scroll-progress-bar"></div></div>
+
   <!-- ***** Header ***** -->
 
   <header class="header" role="banner" id="top">
@@ -70,6 +73,9 @@
         <span class="hero-portal__corner hero-portal__corner--bl" aria-hidden="true"></span>
         <span class="hero-portal__corner hero-portal__corner--br" aria-hidden="true"></span>
 
+        <!-- Particle canvas background -->
+        <canvas class="hero-portal__particles" aria-hidden="true"></canvas>
+
         <!-- Floating Code Particle Badges -->
         <div class="hero-portal__tag tag-1" aria-hidden="true">&lt;Vue.js /&gt;</div>
         <div class="hero-portal__tag tag-2" aria-hidden="true">&lt;PHP Laravel /&gt;</div>
@@ -80,9 +86,11 @@
           <div class="header__text">
             <p class="header__greeting">Hello, I'm</p>
             <h1 class="heading-primary">
-              <span>Melwin Dave D. Abe</span>
+              <span class="hero-name">Melwin Dave D. Abe</span>
             </h1>
-            <p class="header__role"><span class="header__role-bracket" aria-hidden="true">&lt;</span>Full-Stack Developer<span class="header__role-bracket" aria-hidden="true">/&gt;</span></p>
+            <p class="header__role">
+              <span class="header__role-bracket" aria-hidden="true">&lt;</span><span class="hero-typewriter" aria-label="Full-Stack Developer"></span><span class="header__role-bracket" aria-hidden="true">/&gt;</span>
+            </p>
             <p class="header__tagline">Building modern, scalable web applications with clean code and intuitive user experiences.</p>
             <div class="header__cta">
               <a href="#work" class="btn">View My Work</a>
