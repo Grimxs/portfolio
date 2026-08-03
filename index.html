@@ -35,9 +35,9 @@
   <link rel="preload" href="./fonts/HKGrotesk-Regular.woff" as="font" type="font/woff" crossorigin="anonymous" />
   <link rel="preload" href="./fonts/Jost-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
 
-  <!-- GSAP — loaded in <head> so it's available when index.js runs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <!-- GSAP — must load before index.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <link rel="stylesheet" href="index.css" />
 </head>
@@ -356,8 +356,8 @@
     </div>
   </div>
 
-  <!-- index.js loaded once, after GSAP (defer ensures correct order) -->
-  <script src="./index.js" defer></script>
+  <!-- index.js loaded once, after GSAP -->
+  <script src="./index.js"></script>
 
 </body>
 </html>
