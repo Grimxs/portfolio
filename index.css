@@ -2419,3 +2419,20 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
         transition: none;
     }
 }
+
+/* ========================================
+   PROJECT COUNT BADGE
+   ======================================== */
+
+.work__count {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--color-accent-primary);
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    padding: 0.2rem var(--space-3);
+    border-radius: var(--radius-full);
+    letter-spacing: 0.02em;
+    vertical-align: middle;
+}

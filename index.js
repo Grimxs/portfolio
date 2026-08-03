@@ -580,6 +580,12 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
     container.appendChild(card);
     fadeObserver.observe(card);
   });
+
+  // Update project count in subtitle
+  const countEl = document.getElementById('project-count');
+  if (countEl && displayRepos.length > 0) {
+    countEl.textContent = `${displayRepos.length} project${displayRepos.length !== 1 ? 's' : ''} and counting.`;
+  }
 })();
 
 /* -----------------------------------------
