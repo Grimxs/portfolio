@@ -416,6 +416,17 @@ const PRIVATE_SHOWCASE_PROJECTS = [
     html_url: 'https://github.com/abemelwin/Esprint-Service-Monitoring',
     private: true,
     updated_at: '2026-07-08'
+  },
+  {
+    name: 'scoreboard-app',
+    description: 'A modern desktop application for managing basketball scoreboards, games, and team statistics. Built with Electron, React, and TypeScript.',
+    language: 'TypeScript',
+    topics: ['typescript', 'electron', 'react', 'basketball', 'desktop-app'],
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: 'https://github.com/abemelwin/scoreboard-app',
+    private: true,
+    updated_at: '2026-07-17'
   }
 ];
 
