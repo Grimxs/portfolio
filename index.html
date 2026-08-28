@@ -5,12 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Melwin Dave D. Abe | Full-Stack Developer</title>
+  <title>Melwin Dave D. Abe | Full-Stack Developer &amp; Software Engineer</title>
 
-  <meta name="description" content="Melwin Dave D. Abe — Full-stack developer specializing in Vue.js, PHP, and modern web technologies. Building clean, scalable web applications." />
-  <meta name="keywords" content="Melwin Dave Abe, Full Stack Developer, Vue.js Developer, PHP Developer, Web Developer, JavaScript, Tailwind CSS" />
+  <meta name="description" content="Melwin Dave D. Abe — Full-Stack Developer specializing in Vue.js, PHP, Laravel, TypeScript, and modern web applications. Building clean, scalable, and high-performance digital products." />
+  <meta name="keywords" content="Melwin Dave Abe, Melwin Dave D. Abe, Full Stack Developer, Vue.js Developer, PHP Laravel, TypeScript, Web Developer Philippines, Software Engineer" />
   <meta name="author" content="Melwin Dave D. Abe" />
-  <meta name="theme-color" content="#0f0f12" />
+  <meta name="theme-color" content="#07070d" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://abemelwin.github.io/portfolio/" />
@@ -19,53 +19,119 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://abemelwin.github.io/portfolio/" />
   <meta property="og:title" content="Melwin Dave D. Abe | Full-Stack Developer" />
-  <meta property="og:description" content="Full-stack developer specializing in Vue.js, PHP, and modern web technologies." />
+  <meta property="og:description" content="Building scalable, high-performance web applications with Vue.js, PHP Laravel, and modern cloud technologies." />
   <meta property="og:image" content="./images/abe.jpg" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:title" content="Melwin Dave D. Abe | Full-Stack Developer" />
-  <meta property="twitter:description" content="Full-stack developer specializing in Vue.js, PHP, and modern web technologies." />
+  <meta property="twitter:description" content="Building scalable, high-performance web applications with Vue.js, PHP Laravel, and modern cloud technologies." />
   <meta property="twitter:image" content="./images/abe.jpg" />
 
-  <!-- Favicon (uses GitHub avatar as SVG fallback) -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='.9em' font-size='70' x='50%' text-anchor='middle' font-family='system-ui,sans-serif' fill='white'>M</text></svg>" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%236366f1'/><stop offset='100%' stop-color='%2306b6d4'/></linearGradient></defs><rect width='100' height='100' rx='24' fill='url(%23g)'/><text y='.92em' font-size='68' font-weight='bold' x='50%' text-anchor='middle' font-family='system-ui,sans-serif' fill='white'>M</text></svg>" />
+
+  <!-- Google Fonts: Plus Jakarta Sans, Outfit, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
 
   <!-- Preload critical fonts -->
   <link rel="preload" href="./fonts/HKGrotesk-Regular.woff" as="font" type="font/woff" crossorigin="anonymous" />
   <link rel="preload" href="./fonts/Jost-Regular.ttf" as="font" type="font/truetype" crossorigin="anonymous" />
 
-  <!-- GSAP — must load before index.js -->
+  <!-- GSAP for smooth animations -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <link rel="stylesheet" href="index.css?v=2" />
+  <link rel="stylesheet" href="index.css?v=3" />
 </head>
 
 <body>
 
+  <!-- Ambient Aurora Lighting Background -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-orb aurora-orb--1"></div>
+    <div class="aurora-orb aurora-orb--2"></div>
+    <div class="aurora-orb aurora-orb--3"></div>
+    <div class="aurora-grid"></div>
+  </div>
+
   <!-- Scroll progress bar -->
   <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar" id="scroll-progress-bar"></div></div>
 
-  <!-- ***** Header ***** -->
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- ***** Header & Navigation ***** -->
   <header class="header" role="banner" id="top">
     <div class="row nav-row">
       <nav class="nav" role="navigation" aria-label="Main navigation">
-        <a href="#top" class="nav__logo">MDA</a>
+        <a href="#top" class="nav__logo" aria-label="Melwin Dave Abe Home">
+          <span class="nav__logo-symbol">&lt;</span>
+          <span class="nav__logo-text">MDA</span>
+          <span class="nav__logo-symbol">/&gt;</span>
+        </a>
+
+        <!-- Desktop Navigation -->
         <ul class="nav__items">
-          <li class="nav__item"><a href="#work"       class="nav__link">Projects</a></li>
-          <li class="nav__item"><a href="#experience" class="nav__link">Education &amp; Experience</a></li>
-          <li class="nav__item"><a href="#about"      class="nav__link">About</a></li>
-          <li class="nav__item"><a href="#contact"    class="nav__link">Contact</a></li>
+          <li class="nav__item"><a href="#work" class="nav__link">Projects</a></li>
+          <li class="nav__item"><a href="#skills" class="nav__link">Tech Stack</a></li>
+          <li class="nav__item"><a href="#experience" class="nav__link">Experience</a></li>
+          <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+          <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
         </ul>
+
+        <!-- Navigation Actions -->
+        <div class="nav__actions">
+          <button class="nav__btn-copy-email" id="quick-copy-email" title="Copy email to clipboard" aria-label="Copy melwin dave email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+            </svg>
+            <span class="nav__btn-copy-text">Copy Email</span>
+          </button>
+
+          <a href="ABE_MELWIN DAVE_RESUME.pdf" class="btn btn--nav-cv" target="_blank" rel="noopener noreferrer">
+            <span>Resume</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          </a>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="nav__hamburger" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
       </nav>
     </div>
 
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav" id="mobile-nav" aria-hidden="true">
+      <div class="mobile-nav__overlay" id="mobile-nav-overlay"></div>
+      <div class="mobile-nav__drawer">
+        <div class="mobile-nav__header">
+          <span class="nav__logo"><span class="nav__logo-text">MDA</span></span>
+          <button class="mobile-nav__close" id="mobile-nav-close" aria-label="Close menu">&times;</button>
+        </div>
+        <ul class="mobile-nav__items">
+          <li><a href="#work" class="mobile-nav__link">Projects</a></li>
+          <li><a href="#skills" class="mobile-nav__link">Tech Stack</a></li>
+          <li><a href="#experience" class="mobile-nav__link">Experience &amp; Education</a></li>
+          <li><a href="#about" class="mobile-nav__link">About Me</a></li>
+          <li><a href="#contact" class="mobile-nav__link">Contact</a></li>
+        </ul>
+        <div class="mobile-nav__footer">
+          <a href="ABE_MELWIN DAVE_RESUME.pdf" class="btn btn--full" target="_blank" rel="noopener noreferrer">Download Resume</a>
+          <p class="mobile-nav__email">abemelwin01@gmail.com</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Portal Showcase -->
     <div class="hero-portal-wrapper">
       <div class="hero-portal" id="hero-portal">
         <div class="hero-portal__ambient-glow" aria-hidden="true"></div>
-        <div class="hero-portal__grid-bg" aria-hidden="true"></div>
 
         <!-- Cyber Corner Accents -->
         <span class="hero-portal__corner hero-portal__corner--tl" aria-hidden="true"></span>
@@ -76,45 +142,174 @@
         <!-- Particle canvas background -->
         <canvas class="hero-portal__particles" aria-hidden="true"></canvas>
 
-        <!-- Floating Code Particle Badges -->
-        <div class="hero-portal__tag tag-1" aria-hidden="true">&lt;Vue.js /&gt;</div>
-        <div class="hero-portal__tag tag-2" aria-hidden="true">&lt;PHP Laravel /&gt;</div>
-        <div class="hero-portal__tag tag-3" aria-hidden="true">{ Full-Stack }</div>
-        <div class="hero-portal__tag tag-4" aria-hidden="true">async/await</div>
+        <div class="hero-content-grid">
+          
+          <!-- Hero Left Column: Intro, Titles, CTAs, Stats -->
+          <div class="hero-left">
+            
+            <div class="hero-badge">
+              <span class="hero-badge__dot"></span>
+              <span class="hero-badge__text">Available for Freelance &amp; Full-Time Roles</span>
+            </div>
 
-        <div class="header__text-box">
-          <div class="header__text">
-            <p class="header__greeting">Hello, I'm</p>
-            <h1 class="heading-primary">
-              <span class="hero-name">Melwin Dave D. Abe</span>
-            </h1>
-            <p class="header__role">
-              <span class="header__role-bracket" aria-hidden="true">&lt;</span><span class="hero-typewriter" aria-label="Full-Stack Developer"></span><span class="header__role-bracket" aria-hidden="true">/&gt;</span>
-            </p>
-            <p class="header__tagline">Building modern, scalable web applications with clean code and intuitive user experiences.</p>
-            <div class="header__cta">
-              <a href="#work" class="btn">View My Work</a>
-              <a href="#contact" class="btn btn--outline">Get in Touch</a>
+            <div class="header__text">
+              <p class="header__greeting">Kumusta! I am</p>
+              <h1 class="heading-primary">
+                <span class="hero-name">Melwin Dave D. Abe</span>
+              </h1>
+              
+              <div class="header__role-wrapper">
+                <span class="header__role-prefix">&gt;</span>
+                <span class="header__role">
+                  <span class="hero-typewriter" aria-label="Full-Stack Developer"></span>
+                </span>
+                <span class="hero-cursor" aria-hidden="true">_</span>
+              </div>
+
+              <p class="header__tagline">
+                Crafting robust web architectures, reactive frontend interfaces with <strong>Vue.js</strong>, and scalable backend engines with <strong>PHP Laravel</strong> and <strong>Node.js</strong>.
+              </p>
+
+              <div class="header__cta">
+                <a href="#work" class="btn btn--primary">
+                  <span>Explore Projects</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a href="#contact" class="btn btn--outline">
+                  <span>Let's Talk</span>
+                </a>
+                <button class="btn btn--icon-only copy-email-btn" data-email="abemelwin01@gmail.com" title="Copy email address" aria-label="Copy email address">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Quick Stats Strip -->
+              <div class="hero-stats">
+                <div class="hero-stat-card">
+                  <span class="hero-stat-num" data-target="3">3+</span>
+                  <span class="hero-stat-label">Years Exp.</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat-card">
+                  <span class="hero-stat-num" data-target="20">20+</span>
+                  <span class="hero-stat-label">Git Repos</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat-card">
+                  <span class="hero-stat-num">100%</span>
+                  <span class="hero-stat-label">Commitment</span>
+                </div>
+              </div>
+
             </div>
           </div>
+
+          <!-- Hero Right Column: Holographic Photo Portrait + Floating Tech Badges -->
+          <div class="hero-right">
+            <div class="cyber-portrait-card" id="cyber-portrait">
+              <div class="cyber-portrait__glow"></div>
+              <div class="cyber-portrait__ring cyber-portrait__ring--outer"></div>
+              <div class="cyber-portrait__ring cyber-portrait__ring--inner"></div>
+              
+              <!-- Real Photo Frame -->
+              <div class="cyber-portrait__frame">
+                <img src="./images/abe.jpg" alt="Melwin Dave D. Abe - Full-Stack Developer" class="cyber-portrait__img" width="400" height="600" />
+                <div class="cyber-portrait__scanline"></div>
+                <div class="cyber-portrait__gradient-overlay"></div>
+                
+                <div class="cyber-portrait__status-pill">
+                  <span class="pulse-dot"></span>
+                  <span>Full-Stack Eng.</span>
+                </div>
+              </div>
+
+              <!-- Floating Tech Badges -->
+              <div class="hero-portal__tag tag-1" aria-hidden="true">
+                <span class="tag-icon">⚡</span> Vue.js 3
+              </div>
+              <div class="hero-portal__tag tag-2" aria-hidden="true">
+                <span class="tag-icon">🐘</span> PHP Laravel
+              </div>
+              <div class="hero-portal__tag tag-3" aria-hidden="true">
+                <span class="tag-icon">🔷</span> TypeScript
+              </div>
+              <div class="hero-portal__tag tag-4" aria-hidden="true">
+                <span class="tag-icon">🚀</span> REST APIs
+              </div>
+            </div>
+
+            <!-- Interactive Mini Dev Terminal -->
+            <div class="hero-terminal">
+              <div class="hero-terminal__bar">
+                <div class="hero-terminal__dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <span class="hero-terminal__title">dave@portfolio:~</span>
+                <span class="hero-terminal__badge">bash</span>
+              </div>
+              <div class="hero-terminal__body" id="hero-terminal-output">
+                <p class="hero-terminal__line"><span class="t-prompt">$</span> <span class="t-cmd">whoami</span></p>
+                <p class="hero-terminal__res">&gt; Melwin Dave D. Abe — Full-Stack Web Developer &amp; Software Builder</p>
+              </div>
+              <div class="hero-terminal__quick-cmds">
+                <span class="t-label">Quick run:</span>
+                <button class="t-btn" data-cmd="skills">skills</button>
+                <button class="t-btn" data-cmd="experience">experience</button>
+                <button class="t-btn" data-cmd="contact">contact</button>
+                <button class="t-btn" data-cmd="clear">clear</button>
+              </div>
+            </div>
+
+          </div>
+
         </div>
+
       </div>
     </div>
 
+    <!-- Scroll Indicator -->
     <div class="header__scroll" aria-hidden="true">
-      <div class="header__scroll-mouse"><div class="header__scroll-wheel"></div></div>
-      <span class="header__scroll-label">Scroll to Explore</span>
+      <a href="#work" class="header__scroll-link" aria-label="Scroll down to projects">
+        <div class="header__scroll-mouse"><div class="header__scroll-wheel"></div></div>
+        <span class="header__scroll-label">Scroll to Explore</span>
+      </a>
     </div>
   </header>
 
   <main role="main">
 
-    <!-- ***** Work ***** -->
-
+    <!-- ***** Work / Projects Section ***** -->
     <section class="work" id="work" data-github-username="abemelwin">
       <div class="row">
-        <h2>My Projects</h2>
-        <p class="work__subtitle">A collection of projects I've built — automatically synced from my GitHub. <span id="project-count" class="work__count"></span></p>
+        
+        <div class="section-header fade-in">
+          <span class="section-badge">Selected Work</span>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-subtitle">
+            A dynamic collection of full-stack systems, modern frontends, and backend APIs synced live from my GitHub.
+            <span id="project-count" class="work__count"></span>
+          </p>
+        </div>
+
+        <!-- Project Controls: Search & Category Filter Tabs -->
+        <div class="project-controls fade-in">
+          <div class="project-filters" id="project-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="fullstack">Full-Stack</button>
+            <button class="filter-btn" data-filter="frontend">Frontend &amp; Vue</button>
+            <button class="filter-btn" data-filter="backend">Backend &amp; APIs</button>
+            <button class="filter-btn" data-filter="mobile">Mobile / Apps</button>
+          </div>
+
+          <div class="project-search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="project-search-input" placeholder="Search by name or tech (e.g. vue, laravel, api)..." aria-label="Search projects" />
+          </div>
+        </div>
 
         <!-- Loading skeleton (shown while fetching) -->
         <div id="github-loading" class="github-loading" aria-label="Loading projects…" role="status">
@@ -136,54 +331,210 @@
 
         <!-- GitHub auto-fetched projects will be injected here -->
         <div id="github-projects" class="work__boxes github-projects">
-          <!-- JS will populate this -->
+          <!-- Populated dynamically by index.js with fallback support -->
         </div>
 
       </div>
     </section>
 
-    <!-- ***** Experience ***** -->
+    <!-- ***** Skills & Tech Stack Bento Section ***** -->
+    <section class="skills-section" id="skills">
+      <div class="row">
+        
+        <div class="section-header fade-in">
+          <span class="section-badge">Capabilities</span>
+          <h2 class="section-title">Tech Stack &amp; Skills Matrix</h2>
+          <p class="section-subtitle">
+            Specialized toolkit refined through production development, client freelancing, and full-stack engineering.
+          </p>
+        </div>
 
+        <div class="bento-grid fade-in">
+          
+          <!-- Bento 1: Frontend Mastery -->
+          <div class="bento-card bento-card--spotlight">
+            <div class="bento-card__header">
+              <div class="bento-card__icon bento-card__icon--cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <div>
+                <h3 class="bento-card__title">Frontend Mastery</h3>
+                <p class="bento-card__subtitle">Reactive, fluid, and responsive user interfaces</p>
+              </div>
+            </div>
+            <div class="bento-card__tags">
+              <span class="skill-tag skill-tag--featured"><span class="skill-dot"></span>Vue.js (2 &amp; 3)</span>
+              <span class="skill-tag skill-tag--featured"><span class="skill-dot"></span>TypeScript</span>
+              <span class="skill-tag"><span class="skill-dot"></span>React</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Next.js</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Nuxt.js</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Tailwind CSS</span>
+              <span class="skill-tag"><span class="skill-dot"></span>HTML5 &amp; Modern CSS</span>
+              <span class="skill-tag"><span class="skill-dot"></span>GSAP &amp; Animations</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Pinia &amp; Vuex</span>
+            </div>
+          </div>
+
+          <!-- Bento 2: Backend Architecture -->
+          <div class="bento-card bento-card--spotlight">
+            <div class="bento-card__header">
+              <div class="bento-card__icon bento-card__icon--indigo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              </div>
+              <div>
+                <h3 class="bento-card__title">Backend &amp; APIs</h3>
+                <p class="bento-card__subtitle">Scalable server logic, security, and data flow</p>
+              </div>
+            </div>
+            <div class="bento-card__tags">
+              <span class="skill-tag skill-tag--featured"><span class="skill-dot"></span>PHP</span>
+              <span class="skill-tag skill-tag--featured"><span class="skill-dot"></span>Laravel Framework</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Node.js</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Express.js</span>
+              <span class="skill-tag"><span class="skill-dot"></span>RESTful APIs</span>
+              <span class="skill-tag"><span class="skill-dot"></span>GraphQL</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Authentication (JWT/OAuth)</span>
+            </div>
+          </div>
+
+          <!-- Bento 3: Databases & Cloud -->
+          <div class="bento-card bento-card--spotlight">
+            <div class="bento-card__header">
+              <div class="bento-card__icon bento-card__icon--purple">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              </div>
+              <div>
+                <h3 class="bento-card__title">Databases &amp; Cloud</h3>
+                <p class="bento-card__subtitle">Structured storage, caching, and serverless backends</p>
+              </div>
+            </div>
+            <div class="bento-card__tags">
+              <span class="skill-tag skill-tag--featured"><span class="skill-dot"></span>MySQL</span>
+              <span class="skill-tag"><span class="skill-dot"></span>PostgreSQL</span>
+              <span class="skill-tag"><span class="skill-dot"></span>MongoDB</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Supabase</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Firebase</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Database Modeling &amp; ORMs</span>
+            </div>
+          </div>
+
+          <!-- Bento 4: DevOps, Tools & Services -->
+          <div class="bento-card bento-card--spotlight">
+            <div class="bento-card__header">
+              <div class="bento-card__icon bento-card__icon--pink">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              </div>
+              <div>
+                <h3 class="bento-card__title">DevOps &amp; Integrations</h3>
+                <p class="bento-card__subtitle">Deployment pipelines, version control, and 3rd-party services</p>
+              </div>
+            </div>
+            <div class="bento-card__tags">
+              <span class="skill-tag"><span class="skill-dot"></span>Docker</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Git &amp; GitHub</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Vercel &amp; Netlify</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Postman / Insomnia</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Google Apps Script</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Twilio API</span>
+              <span class="skill-tag"><span class="skill-dot"></span>CI/CD Workflows</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ***** Experience & Education Timeline ***** -->
     <section class="experience" id="experience">
       <div class="row">
-        <h2>Education &amp; Experience</h2>
+        
+        <div class="section-header fade-in">
+          <span class="section-badge">Career Journey</span>
+          <h2 class="section-title">Education &amp; Experience</h2>
+          <p class="section-subtitle">A track record of shipping end-to-end applications and solving real business problems.</p>
+        </div>
+
         <div class="timeline">
 
+          <!-- Item 1: ES Print Media -->
           <div class="timeline__item fade-in">
             <div class="timeline__dot" aria-hidden="true"></div>
-            <div class="timeline__content">
+            <div class="timeline__content timeline-card">
               <div class="timeline__header">
-                <h3 class="timeline__role">Web Developer</h3>
-                <span class="timeline__period">Present 2026</span>
+                <div>
+                  <h3 class="timeline__role">Web Developer</h3>
+                  <p class="timeline__company">ES Print Media Inc.</p>
+                </div>
+                <span class="timeline__period timeline__period--active">Present 2026</span>
               </div>
-              <p class="timeline__company">ES Print Media Inc.</p>
-              <p class="timeline__desc">Developing full-stack web applications with modern technologies. Delivering end-to-end solutions from database architecture to responsive user interfaces.</p>
-              <ul class="timeline__tags"></ul>
+              <p class="timeline__desc">
+                Developing full-stack web applications and internal enterprise management systems. Delivering end-to-end solutions from database architecture and secure API pipelines to modern, responsive interfaces.
+              </p>
+              <ul class="timeline__bullets">
+                <li>Engineered scalable full-stack features boosting internal workflow efficiency.</li>
+                <li>Built interactive client-facing and admin dashboard modules with Vue.js and PHP.</li>
+                <li>Optimized database queries and backend endpoints for fast response times.</li>
+              </ul>
+              <div class="timeline__tags">
+                <span class="timeline-tag">Vue.js</span>
+                <span class="timeline-tag">PHP</span>
+                <span class="timeline-tag">MySQL</span>
+                <span class="timeline-tag">REST APIs</span>
+                <span class="timeline-tag">Enterprise Systems</span>
+              </div>
             </div>
           </div>
 
+          <!-- Item 2: Freelance -->
           <div class="timeline__item fade-in">
             <div class="timeline__dot" aria-hidden="true"></div>
-            <div class="timeline__content">
+            <div class="timeline__content timeline-card">
               <div class="timeline__header">
-                <h3 class="timeline__role">Full-Stack Developer</h3>
+                <div>
+                  <h3 class="timeline__role">Full-Stack Developer</h3>
+                  <p class="timeline__company">Freelance / Independent Practice</p>
+                </div>
                 <span class="timeline__period">2023 — Present</span>
               </div>
-              <p class="timeline__company">Freelance</p>
-              <p class="timeline__desc">Building custom web applications for diverse clients. Specializing in full-stack development with Vue.js and PHP, creating scalable solutions from concept to deployment.</p>
-              <ul class="timeline__tags"></ul>
+              <p class="timeline__desc">
+                Partnered with diverse clients to build custom web applications, e-commerce prototypes, and automation tools from concept to deployment.
+              </p>
+              <ul class="timeline__bullets">
+                <li>Translated client business requirements into scalable architectural blueprints.</li>
+                <li>Developed bespoke single-page applications with Vue.js, React, and Laravel.</li>
+                <li>Integrated third-party APIs including payment gateways, SMS (Twilio), and Google APIs.</li>
+              </ul>
+              <div class="timeline__tags">
+                <span class="timeline-tag">Full-Stack</span>
+                <span class="timeline-tag">Laravel</span>
+                <span class="timeline-tag">TypeScript</span>
+                <span class="timeline-tag">Tailwind CSS</span>
+                <span class="timeline-tag">Cloud Deployments</span>
+              </div>
             </div>
           </div>
 
+          <!-- Item 3: STI College -->
           <div class="timeline__item fade-in">
             <div class="timeline__dot" aria-hidden="true"></div>
-            <div class="timeline__content">
+            <div class="timeline__content timeline-card">
               <div class="timeline__header">
-                <h3 class="timeline__role">Bachelor of Science Computer Engineering</h3>
+                <div>
+                  <h3 class="timeline__role">Bachelor of Science in Computer Engineering</h3>
+                  <p class="timeline__company">STI College Batangas</p>
+                </div>
                 <span class="timeline__period">Graduated 2022</span>
               </div>
-              <p class="timeline__company">STI College Batangas / Academic</p>
-              <ul class="timeline__tags"></ul>
+              <p class="timeline__desc">
+                Strong engineering foundation spanning software development, algorithmic thinking, database management, computer architecture, and embedded systems.
+              </p>
+              <div class="timeline__tags">
+                <span class="timeline-tag">Computer Engineering</span>
+                <span class="timeline-tag">Software Systems</span>
+                <span class="timeline-tag">Data Structures</span>
+                <span class="timeline-tag">Hardware &amp; Networks</span>
+              </div>
             </div>
           </div>
 
@@ -191,164 +542,246 @@
       </div>
     </section>
 
-    <!-- ***** About ***** -->
-
+    <!-- ***** About Section ***** -->
     <section class="about" id="about">
       <div class="row">
-        <h2>About Me</h2>
-        <div class="about__content fade-in">
-          <div class="about__text">
-            <p>
-              I'm <strong>Melwin Dave D. Abe</strong>, a full-stack developer specializing in building modern web applications with Vue.js and PHP. I focus on creating clean, maintainable code that delivers exceptional user experiences.
-            </p>
-            <p>
-              With a strong foundation in both frontend and backend development, I transform complex requirements into scalable solutions. From database architecture to responsive interfaces, I ensure every aspect of the application is built to professional standards.
-            </p>
-
-            <p class="about__skills-label">Technologies I work with</p>
-            <div class="about__skills">
-              <span class="about__skills-group">Modern Frontend &amp; State Management</span>
-              <span class="skill-tag">TypeScript</span>
-              <span class="skill-tag">Next.js</span>
-              <span class="skill-tag">Nuxt.js</span>
-              <span class="skill-tag">Vue.js</span>
-              <span class="skill-tag">React</span>
-              <span class="skill-tag">Tailwind CSS</span>
-              <span class="about__skills-group">Backend &amp; Databases</span>
-              <span class="skill-tag">PHP</span>
-              <span class="skill-tag">Laravel</span>
-              <span class="skill-tag">Node.js</span>
-              <span class="skill-tag">Express</span>
-              <span class="skill-tag">MySQL</span>
-              <span class="skill-tag">PostgreSQL</span>
-              <span class="skill-tag">MongoDB</span>
-              <span class="about__skills-group">Tools &amp; Platforms</span>
-              <span class="skill-tag">Docker</span>
-              <span class="skill-tag">Git</span>
-              <span class="skill-tag">REST APIs</span>
-              <span class="skill-tag">GraphQL</span>
-              <span class="skill-tag">Google Apps Script</span>
-              <span class="skill-tag">Firebase</span>
-              <span class="skill-tag">Netlify</span>
-              <span class="skill-tag">Vercel</span>
-              <span class="skill-tag">Twilio</span>
-              <span class="skill-tag">Supabase</span>
-            </div>
-            <a href="ABE_MELWIN DAVE_RESUME.pdf" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">Download Resume</a>
-          </div>
-
-          <div class="about__visual" aria-hidden="true">
-            <div class="about__visual-content">
-              <div class="about__visual-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
-              </div>
-              <div class="about__visual-text">
-                <p class="about__visual-title">Full-Stack Developer</p>
-                <p class="about__visual-subtitle">Building modern web solutions</p>
-              </div>
-            </div>
-          </div>
+        
+        <div class="section-header fade-in">
+          <span class="section-badge">Background</span>
+          <h2 class="section-title">About Melwin Dave</h2>
+          <p class="section-subtitle">Passionate about clean architecture, developer experience, and creating memorable digital interactions.</p>
         </div>
+
+        <div class="about__grid fade-in">
+          
+          <!-- Left Bio Card -->
+          <div class="about__bio-card glass-panel">
+            <p class="about__lead">
+              Hello! I'm <strong>Melwin Dave D. Abe</strong>, a full-stack engineer driven by turning complex technical challenges into elegant, intuitive, and performant web applications.
+            </p>
+            <p>
+              With a background in <strong>Computer Engineering</strong> and continuous hands-on experience in modern frontend (Vue.js, React, TypeScript) and backend engineering (PHP, Laravel, Node.js), I focus on writing maintainable code and scalable systems.
+            </p>
+            <p>
+              Whether it's building a custom management portal, architecting secure REST APIs, or crafting high-converting responsive interfaces, I take pride in delivering top-quality results.
+            </p>
+
+            <div class="about__actions">
+              <a href="ABE_MELWIN DAVE_RESUME.pdf" class="btn btn--primary" target="_blank" rel="noopener noreferrer">
+                <span>Download Resume (PDF)</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              </a>
+              <a href="#contact" class="btn btn--outline">Get in Touch</a>
+            </div>
+          </div>
+
+          <!-- Right Highlights Card -->
+          <div class="about__highlights-card glass-panel">
+            <h3 class="about__highlights-title">What I Bring to the Table</h3>
+            
+            <div class="about__highlight-item">
+              <div class="about__highlight-icon">💻</div>
+              <div>
+                <h4>End-to-End Development</h4>
+                <p>From initial database schemas to polished frontend states, I handle the full development lifecycle.</p>
+              </div>
+            </div>
+
+            <div class="about__highlight-item">
+              <div class="about__highlight-icon">⚡</div>
+              <div>
+                <h4>Performance &amp; Scalability</h4>
+                <p>Clean code architecture, optimized queries, and snappy client-side rendering.</p>
+              </div>
+            </div>
+
+            <div class="about__highlight-item">
+              <div class="about__highlight-icon">🤝</div>
+              <div>
+                <h4>Collaborative &amp; Reliable</h4>
+                <p>Clear communication, agile workflow adaptation, and timely delivery of project milestones.</p>
+              </div>
+            </div>
+
+            <div class="about__status-box">
+              <div class="about__status-dot"></div>
+              <span>Currently accepting select freelance inquiries and career opportunities.</span>
+            </div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
   </main>
 
-  <!-- ***** Contact ***** -->
-
+  <!-- ***** Contact Section ***** -->
   <section class="contact" id="contact">
     <div class="row">
-      <h2>Get in Touch</h2>
-      <div class="contact__info fade-in">
-        <p>
-          Interested in working together or have a question? I'm available for freelance projects and full-time opportunities. Let's discuss how I can help bring your ideas to life.
+      
+      <div class="section-header fade-in">
+        <span class="section-badge">Get in Touch</span>
+        <h2 class="section-title">Let's Build Something Great</h2>
+        <p class="section-subtitle">
+          Have an upcoming project, freelance inquiry, or full-time opportunity? Send me a message and let's discuss how I can help bring your ideas to life.
         </p>
-        <form
-          class="contact__form"
-          action="mailto:abemelwin01@gmail.com"
-          method="POST"
-          enctype="text/plain"
-          onsubmit="handleMailtoForm(event)"
-          novalidate
-        >
-          <div class="contact__form-group">
-            <div class="contact__field">
-              <label class="contact__label" for="c-name">Name</label>
-              <input id="c-name" type="text" name="name" class="contact__input" placeholder="Your Name" required autocomplete="name" />
+      </div>
+
+      <div class="contact__container fade-in">
+        
+        <!-- Left: Contact Details & Quick Copy -->
+        <div class="contact__details glass-panel">
+          <h3>Contact Information</h3>
+          <p class="contact__lead">Feel free to reach out directly via email or connect with me on GitHub.</p>
+
+          <div class="contact__card-info">
+            <div class="contact__card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </div>
-            <div class="contact__field">
-              <label class="contact__label" for="c-email">Email</label>
-              <input id="c-email" type="email" name="email" class="contact__input" placeholder="Your Email" required autocomplete="email" />
+            <div class="contact__card-text">
+              <span class="contact__card-label">Email Address</span>
+              <a href="mailto:abemelwin01@gmail.com" class="contact__card-val">abemelwin01@gmail.com</a>
+            </div>
+            <button class="contact__copy-btn copy-email-btn" data-email="abemelwin01@gmail.com" title="Copy email address" aria-label="Copy email">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            </button>
+          </div>
+
+          <div class="contact__card-info">
+            <div class="contact__card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            </div>
+            <div class="contact__card-text">
+              <span class="contact__card-label">GitHub Profile</span>
+              <a href="https://github.com/abemelwin" target="_blank" rel="noopener noreferrer" class="contact__card-val">github.com/abemelwin</a>
+            </div>
+            <a href="https://github.com/abemelwin" target="_blank" rel="noopener noreferrer" class="contact__copy-btn" title="Visit GitHub" aria-label="Open GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+            </a>
+          </div>
+
+          <div class="contact__availability-banner">
+            <span class="pulse-dot"></span>
+            <div>
+              <p class="avail-title">Available for Projects</p>
+              <p class="avail-sub">Average response time: &lt; 24 hours</p>
             </div>
           </div>
-          <div class="contact__field">
-            <label class="contact__label" for="c-message">Message</label>
-            <textarea id="c-message" name="message" class="contact__input contact__textarea" placeholder="Your Message" rows="5" required></textarea>
-          </div>
-          <button type="submit" class="btn contact__submit">Send Message</button>
-        </form>
+        </div>
+
+        <!-- Right: Modern Contact Form -->
+        <div class="contact__form-wrapper glass-panel">
+          <form
+            class="contact__form"
+            action="mailto:abemelwin01@gmail.com"
+            method="POST"
+            enctype="text/plain"
+            onsubmit="handleMailtoForm(event)"
+            novalidate
+          >
+            <div class="contact__form-group">
+              <div class="contact__field">
+                <label class="contact__label" for="c-name">Your Name</label>
+                <input id="c-name" type="text" name="name" class="contact__input" placeholder="e.g. John Doe" required autocomplete="name" />
+              </div>
+              <div class="contact__field">
+                <label class="contact__label" for="c-email">Your Email</label>
+                <input id="c-email" type="email" name="email" class="contact__input" placeholder="e.g. john@example.com" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="contact__field">
+              <label class="contact__label" for="c-subject">Subject (Optional)</label>
+              <input id="c-subject" type="text" name="subject" class="contact__input" placeholder="Project Inquiry / Job Opportunity" />
+            </div>
+
+            <div class="contact__field">
+              <label class="contact__label" for="c-message">Message</label>
+              <textarea id="c-message" name="message" class="contact__input contact__textarea" placeholder="Tell me about your project, timeline, and goals..." rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary contact__submit">
+              <span>Send Message</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   </section>
 
   <!-- ***** Footer ***** -->
-
   <footer role="contentinfo" class="footer">
-    <div class="row">
+    <div class="row footer__row">
+      <div class="footer__brand">
+        <a href="#top" class="nav__logo">
+          <span class="nav__logo-symbol">&lt;</span>
+          <span class="nav__logo-text">Melwin Dave Abe</span>
+          <span class="nav__logo-symbol">/&gt;</span>
+        </a>
+        <p class="footer__tagline">Full-Stack Developer crafting high-performance digital experiences.</p>
+      </div>
+
       <ul class="footer__social-links">
         <li class="footer__social-link-item">
-          <a href="https://github.com/abemelwin" title="GitHub Profile" target="_blank" rel="noopener noreferrer">
-            <img src="./images/github.svg" class="footer__social-image" alt="GitHub" width="30" height="30" loading="lazy" />
+          <a href="https://github.com/abemelwin" title="GitHub Profile" target="_blank" rel="noopener noreferrer" class="footer__social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            <span>GitHub</span>
           </a>
         </li>
         <li class="footer__social-link-item">
-          <a href="mailto:abemelwin01@gmail.com" title="Send Email" class="footer__email-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <a href="mailto:abemelwin01@gmail.com" title="Send Email" class="footer__social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="20" height="16" x="2" y="4" rx="2"/>
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
             </svg>
-            <span class="sr-only">Email me</span>
+            <span>Email</span>
           </a>
         </li>
       </ul>
+    </div>
+
+    <div class="row footer__bottom">
       <p class="footer__copy">
-        &copy; <span id="footer-year"></span> Melwin Dave D. Abe &mdash; Designed &amp; built by
-        <a href="https://github.com/abemelwin" class="link">Dave</a>.
+        &copy; <span id="footer-year"></span> Melwin Dave D. Abe. Built with precision and modern web standards.
       </p>
+      <a href="#top" class="footer__back-link">Back to top &uarr;</a>
     </div>
   </footer>
 
+  <!-- Floating Back to Top Button -->
   <a href="#top" class="back-to-top" title="Back to Top" aria-label="Back to top">
-    <img src="./images/arrow-up.svg" alt="" class="back-to-top__image" width="24" height="24" aria-hidden="true" />
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
   </a>
 
-  <!-- Request Access Modal (inside body, before closing tag) -->
+  <!-- Request Access Modal -->
   <div id="request-access-modal" class="request-access-modal" aria-hidden="true" role="presentation">
     <div class="request-access-modal__overlay" data-action="close" aria-hidden="true"></div>
     <div class="request-access-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="request-access-title">
       <button class="request-access-modal__close" aria-label="Close dialog" data-action="close">&times;</button>
-      <h3 id="request-access-title">Request Access</h3>
-      <p class="request-access-modal__subtitle">Send a request to access this private repository. I will review and reply by email.</p>
+      <h3 id="request-access-title">Request Repository Access</h3>
+      <p class="request-access-modal__subtitle">Submit a request to review code or demos for this private project. I will respond to your email promptly.</p>
       <form id="request-access-form" class="request-access-form">
         <input type="hidden" name="_subject" value="Access Request from Portfolio" />
         <input type="hidden" name="project" id="request-project" value="" />
         <div class="form-row">
-          <label for="ra-name">Your name</label>
-          <input id="ra-name" name="name" required autocomplete="name" />
+          <label for="ra-name">Your Name</label>
+          <input id="ra-name" name="name" required autocomplete="name" placeholder="John Doe" />
         </div>
         <div class="form-row">
-          <label for="ra-email">Your email</label>
-          <input id="ra-email" name="email" type="email" required autocomplete="email" />
+          <label for="ra-email">Your Email</label>
+          <input id="ra-email" name="email" type="email" required autocomplete="email" placeholder="john@example.com" />
         </div>
         <div class="form-row">
-          <label for="ra-message">Message</label>
-          <textarea id="ra-message" name="message" rows="4" required></textarea>
+          <label for="ra-message">Message / Purpose</label>
+          <textarea id="ra-message" name="message" rows="4" required placeholder="Hi Melwin, I'd like to review the code repository for this project..."></textarea>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn">Send Request</button>
+          <button type="submit" class="btn btn--primary">Send Request</button>
           <button type="button" class="btn btn--outline" data-action="close">Cancel</button>
         </div>
         <div id="ra-status" class="ra-status" aria-live="polite"></div>
@@ -357,7 +790,7 @@
   </div>
 
   <!-- index.js loaded once, after GSAP -->
-  <script src="./index.js?v=2"></script>
+  <script src="./index.js?v=3"></script>
 
 </body>
 </html>
