@@ -417,6 +417,10 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   const loadingEl = document.getElementById('github-loading');
   if (!container) return;
 
+  const showProjectsMessage = (message) => {
+    container.innerHTML = `<p class="github-projects__message">${escapeHtml(message)} <a href="https://github.com/${encodeURIComponent(username)}" target="_blank" rel="noopener noreferrer">View GitHub profile</a>.</p>`;
+  };
+
   // Repos to always skip (config repos, profile readme, portfolio itself)
   const SKIP_REPOS = new Set([
     username.toLowerCase(),
@@ -426,9 +430,20 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   let repos = [];
   try {
-    const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`);
-    if (res.ok) {
-      repos = await res.json();
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`, {
+          headers: { Accept: 'application/vnd.github+json' },
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error(`GitHub API returned ${res.status}`);
+        repos = await res.json();
+        break;
+      } finally {
+        clearTimeout(timeout);
+      }
     }
   } catch (err) {
     console.warn('GitHub projects fetch failed:', err);
@@ -437,12 +452,18 @@ if (yearEl) yearEl.textContent = new Date().getFullYear();
   // Hide loading skeleton
   if (loadingEl) loadingEl.classList.add('github-loading--hidden');
 
-  if (!Array.isArray(repos) || repos.length === 0) return;
+  if (!Array.isArray(repos) || repos.length === 0) {
+    showProjectsMessage('Projects are temporarily unavailable.');
+    return;
+  }
 
   // Filter out skipped repos (portfolio, .github, profile readme)
   const displayRepos = repos.filter(r => !SKIP_REPOS.has(r.name.toLowerCase()));
 
-  if (displayRepos.length === 0) return;
+  if (displayRepos.length === 0) {
+    showProjectsMessage('No public projects found yet.');
+    return;
+  }
 
   container.innerHTML = '';
 

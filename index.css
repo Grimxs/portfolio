@@ -1807,6 +1807,15 @@ body:not(.user-is-tabbing) a:focus { outline: none; }
     flex-shrink: 0;
 }
 
+.github-projects__message {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.github-projects__message a {
+    color: var(--color-accent-primary);
+}
+
 /* ========================================
    LOADING SKELETON
    ======================================== */
