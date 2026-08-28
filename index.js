@@ -353,7 +353,74 @@ function showToast(message, duration = 3000) {
 })();
 
 /* --------------------------------------------------------------------------
-   10. Curated Fallback Projects (When GitHub offline or rate limited)
+   10a. PRIVATE / MANUAL SHOWCASE PROJECTS
+   -------------------------------------------------------------------------- */
+/*
+   PALITAN MO ANG MGA VALUES SA IBABA (huwag galawin ang mga property names,
+   `name:`, `description:`, atbp. — palitan lang ang mga nasa loob ng quotes).
+
+   name          -> Pangalan ng project mo (basta't may spaces/dash, ipapaganda
+                     na siya automatic sa card, hal. "print-media-erp" -> "Print Media Erp")
+   description   -> 1-2 sentence na paglalarawan
+   language      -> Pangunahing tech (hal. 'Laravel', 'Vue.js', 'PHP')
+   topics        -> listahan ng mga tags/keywords (para sa filter/search)
+   private       -> IWANAN NA TRUE — ito yung nagpapalabas ng "Request Access"
+                     button sa halip na "View on GitHub" link
+   html_url      -> pwede mong ilagay dito ang portfolio/demo page mo, o
+                     iwanan lang sa github.com/username
+
+   Gusto magdagdag pa ng isa pang private project? I-copy mo lang yung isang
+   { ... } block sa ibaba, i-paste pagkatapos ng comma, tapos palitan ang laman.
+*/
+const PRIVATE_SHOWCASE_PROJECTS = [
+  {
+    name: 'esprint-check-monitoring',
+    description: 'Internal check monitoring system for ES Print Media Inc. — tracks post-dated checks, hold requests, returns, deposits, partial payments, and collections across multiple branches and subsidiaries.',
+    language: 'TypeScript',
+    topics: ['typescript', 'nextjs', 'internal-tool', 'tailwindcss', 'vercel', 'supabase', 'check-monitoring'],
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: 'https://github.com/abemelwin/esprint-check-monitoring',
+    private: true,
+    updated_at: '2026-08-28'
+  },
+  {
+    name: 'spmt',
+    description: 'Staff Performance System Management Tracker (SPMT) — A web-based HR management system for tracking employee performance, memorandums, training modules, announcements, reports, and staffing. Built with Next.js, Supabase, and Tailwind CSS.',
+    language: 'TypeScript',
+    topics: ['react', 'typescript', 'nextjs', 'tailwindcss', 'performance-management', 'hr-management', 'supabase'],
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: 'https://github.com/abemelwin/spmt',
+    private: true,
+    updated_at: '2026-08-28'
+  },
+  {
+    name: 'sales-portal',
+    description: 'Web-based sales workspace for ESP Print Media, Inc. for creating customer quotes, managing the machine catalog, calculating payments, accessing product references, and preparing closing documents.',
+    language: 'TypeScript',
+    topics: ['typescript', 'nextjs', 'supabase', 'sales-portal', 'tailwindcss', 'erp'],
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: 'https://github.com/abemelwin/sales-portal',
+    private: true,
+    updated_at: '2026-08-28'
+  },
+  {
+    name: 'Esprint-Service-Monitoring',
+    description: 'Monitoring system for tracking service requests for ES Print Service',
+    language: 'TypeScript',
+    topics: ['typescript', 'nextjs', 'service-monitoring', 'internal-tool'],
+    stargazers_count: 0,
+    forks_count: 0,
+    html_url: 'https://github.com/abemelwin/Esprint-Service-Monitoring',
+    private: true,
+    updated_at: '2026-07-08'
+  }
+];
+
+/* --------------------------------------------------------------------------
+   10b. Curated Fallback Projects (When GitHub offline or rate limited)
    -------------------------------------------------------------------------- */
 const FALLBACK_PROJECTS = [
   {
@@ -456,6 +523,10 @@ let allProjectsData = [];
     repos = FALLBACK_PROJECTS;
   }
 
+  // Palaging isama ang mga private/manual showcase projects (hindi galing sa
+  // GitHub API dahil hindi talaga makikita ng public request ang private repos)
+  repos = [...PRIVATE_SHOWCASE_PROJECTS, ...repos];
+
   allProjectsData = repos;
 
   // Determine category helper
@@ -464,7 +535,7 @@ let allProjectsData = [];
     const lang = (repo.language || '').toLowerCase();
 
     if (topics.some(t => ['android', 'ios', 'mobile', 'react-native', 'flutter'].includes(t))) return 'mobile';
-    if (topics.some(t => ['fullstack', 'full-stack', 'laravel', 'erp'].includes(t)) || (lang === 'php' && topics.includes('vue'))) return 'fullstack';
+    if (topics.some(t => ['fullstack', 'full-stack', 'laravel', 'erp', 'supabase', 'hr-management', 'check-monitoring', 'sales-portal', 'internal-tool'].includes(t)) || (lang === 'php' && topics.includes('vue'))) return 'fullstack';
     if (['vue', 'typescript', 'javascript', 'react', 'html', 'css'].includes(lang) && !topics.includes('backend')) return 'frontend';
     if (['php', 'python', 'go', 'node', 'express'].includes(lang) || topics.some(t => ['api', 'backend', 'rest-api'].includes(t))) return 'backend';
     return 'fullstack';
