@@ -88,41 +88,55 @@
 <table>
   <tr>
     <td width="50%" valign="top">
-      <h4>🏢 Print Media & Enterprise ERP</h4>
-      <p>Enterprise resource management system for print production workflows, job order pipelines, and role-based permissions.</p>
+      <h4>📑 ES Print Check Monitoring System</h4>
+      <p>Financial management system for tracking post-dated checks (PDC), holds, bank returns, deposits, and multi-branch collection pipelines.</p>
       <p>
-        <img src="https://img.shields.io/badge/Vue.js-35495E?style=flat-square&logo=vue.js&logoColor=4FC08D" alt="Vue" />
-        <img src="https://img.shields.io/badge/Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white" alt="Laravel" />
-        <img src="https://img.shields.io/badge/MySQL-005C84?style=flat-square&logo=mysql&logoColor=white" alt="MySQL" />
+        <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
+        <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind" />
       </p>
     </td>
     <td width="50%" valign="top">
-      <h4>⚡ Vue Commerce & Order SPA</h4>
-      <p>Reactive single-page e-commerce application with real-time state management, instant catalog search, and checkout integration.</p>
+      <h4>👥 Staff Performance Tracker (SPMT)</h4>
+      <p>Web-based HR performance portal for employee evaluations, training modules, official memorandums, and real-time analytics.</p>
       <p>
-        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-        <img src="https://img.shields.io/badge/Vue_3-35495E?style=flat-square&logo=vue.js&logoColor=4FC08D" alt="Vue 3" />
+        <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+        <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
         <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind" />
       </p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <h4>🚀 Laravel RESTful Microservices API</h4>
-      <p>High-performance backend API engine with JWT token authentication, automated queue workers, and rate limiting.</p>
+      <h4>💼 ES Print Sales Portal &amp; Quoter</h4>
+      <p>Interactive sales catalog, quote generator, and installment calculator for machine sales and customer closing documentation.</p>
       <p>
-        <img src="https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white" alt="PHP" />
-        <img src="https://img.shields.io/badge/Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white" alt="Laravel" />
-        <img src="https://img.shields.io/badge/REST_API-02569B?style=flat-square" alt="REST" />
+        <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
       </p>
     </td>
     <td width="50%" valign="top">
-      <h4>📦 Real-Time Inventory & Dispatch Tracker</h4>
-      <p>Multi-warehouse inventory dashboard with live stock updates and automated low-inventory SMS alerts via Twilio.</p>
+      <h4>🔧 ES Print Service Request Monitoring</h4>
+      <p>Service monitoring dashboard for tracking, assigning, and resolving client machine repair requests and field technician dispatches.</p>
       <p>
-        <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node" />
-        <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express" />
-        <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=flat-square&logo=mongodb&logoColor=white" alt="MongoDB" />
+        <img src="https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase" />
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" valign="top">
+      <h4>🏀 Basketball Scoreboard Desktop App</h4>
+      <p>Cross-platform desktop application for sports management with live match timers, shot clock controls, and statistical tracking.</p>
+      <p>
+        <img src="https://img.shields.io/badge/Electron-47848F?style=flat-square&logo=electron&logoColor=white" alt="Electron" />
+        <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+        <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+        <img src="https://img.shields.io/badge/Tailwind-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" alt="Tailwind" />
       </p>
     </td>
   </tr>

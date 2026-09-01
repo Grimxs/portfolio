@@ -399,7 +399,7 @@ const PRIVATE_SHOWCASE_PROJECTS = [
     name: 'sales-portal',
     description: 'Web-based sales workspace for ESP Print Media, Inc. for creating customer quotes, managing the machine catalog, calculating payments, accessing product references, and preparing closing documents.',
     language: 'TypeScript',
-    topics: ['typescript', 'nextjs', 'supabase', 'sales-portal', 'tailwindcss', 'erp'],
+    topics: ['typescript', 'nextjs', 'supabase', 'sales-portal', 'tailwindcss', 'sales-tool'],
     stargazers_count: 0,
     forks_count: 0,
     html_url: 'https://github.com/abemelwin/sales-portal',
